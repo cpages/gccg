@@ -13,7 +13,7 @@ CC=gcc
 # Linker
 LD=g++
 # Explicit location of sdl-config if not in $PATH.
-SDLCONFIG=sdl-config
+SDLCONFIG=sdl2-config
 # Tracker address
 TRACKER=http://tracker.thepiratebay.org/announce
 # Set these if compiling with squirrel.
@@ -34,9 +34,9 @@ CFLAGS=-I./src/include -g -Wall `$(SDLCONFIG) --cflags` $(CFLAGS_SQUIRREL)
 
 CXXFLAGS=-ftemplate-depth-30 $(CFLAGS)
 
-LIBS=`$(SDLCONFIG) --libs` -lSDL_net -lSDL_image -ljpeg -lSDL_ttf -lSDL_mixer $(LIBS_SQUIRREL)
+LIBS=`$(SDLCONFIG) --libs` -lSDL2_net -lSDL2_image -ljpeg -lSDL2_ttf -lSDL2_mixer $(LIBS_SQUIRREL)
 
-LIBS_TEXT=`$(SDLCONFIG) --libs` -lSDL_net -lSDL_mixer $(LIBS_SQUIRREL)
+LIBS_TEXT=`$(SDLCONFIG) --libs` -lSDL2_net -lSDL2_mixer $(LIBS_SQUIRREL)
 
 COMMON=tmp/parser_libcards.o tmp/parser_libnet.o tmp/parser.o tmp/data_filedb.o tmp/parser_lib.o tmp/tools.o tmp/carddata.o tmp/xml_parser.o tmp/security.o tmp/data.o tmp/localization.o $(COMMON_SQUIRREL)
 
@@ -49,23 +49,6 @@ GCCG=tmp/gccg.o $(COMMON)
 CXXCMD=$(CXX) $(ARGS) $(DEFINES) $(CXXFLAGS) -c
 
 CCCMD=$(CC) $(ARGS) $(DEFINES) $(CFLAGS) -c
-
-#####################################################################
-#
-# Help
-#
-#####################################################################
-
-help:
-	@echo
-	@echo Usage:
-	@echo
-	@echo "  make all            - rebuild client and server binaries"
-	@echo "  make client         - rebuild client binaries"
-	@echo "  make server         - rebuild server binaries"
-	@echo "  make clean          - clear backup and temporary files"
-	@echo "  make gccg           - rebuild simple command line script interpreter"
-	@echo
 
 #####################################################################
 #
@@ -174,3 +157,20 @@ tmp/SDL_rotozoom.o: src/SDL_rotozoom.c
 # 	$(MAKE) mirrors
 # 	$(MAKE) web
 # 	$(MAKE) web-update
+
+#####################################################################
+#
+# Help
+#
+#####################################################################
+
+help:
+	@echo
+	@echo Usage:
+	@echo
+	@echo "  make all            - rebuild client and server binaries"
+	@echo "  make client         - rebuild client binaries"
+	@echo "  make server         - rebuild server binaries"
+	@echo "  make clean          - clear backup and temporary files"
+	@echo "  make gccg           - rebuild simple command line script interpreter"
+	@echo
