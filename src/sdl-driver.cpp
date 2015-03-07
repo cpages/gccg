@@ -571,14 +571,16 @@ void Driver::UpdateScreen(int x0,int y0,int w,int h)
             return;
         y0=0;
     }
+#if 0
     SDL_Rect r;
     r.x = x0;
     r.y = y0;
     r.w = w;
     r.h = h;
+#endif
     SDL_UpdateTexture(texture, NULL, screen->pixels, screen->pitch);
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, texture, &r, &r);
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
     SDL_RenderPresent(renderer);
 }
 
