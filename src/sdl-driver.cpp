@@ -42,6 +42,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <cassert>
 #include "driver.h"
 #include "error.h"
 #include "carddata.h"
@@ -59,7 +60,13 @@ namespace Driver
 bool use_free_fonts=true;
 /// Pointer to the physical screen.
 static SDL_Surface* screen;
-/// Pointer to current output surface.
+/// Pointer to the physical screen.
+static SDL_Texture* texture;
+/// Pointer to the window.
+static SDL_Window* window;
+/// Pointer to the renderer.
+static SDL_Renderer* renderer;
+/// Pointer to current output texture.
 static SDL_Surface* output=0;
 /// Number of the current surface.
 static int output_surface=0;
@@ -216,7 +223,7 @@ static int GetEvent(SDL_Event& event)
     {
         SDL_Event peep;
         int count=0;
-        while(count < 50 && SDL_PeepEvents(&peep,1,SDL_GETEVENT,SDL_EVENTMASK(SDL_MOUSEMOTION))==1)
+        while(count < 50 && SDL_PeepEvents(&peep,1,SDL_GETEVENT,SDL_MOUSEMOTION,SDL_MOUSEMOTION)==1)
         {
             event.motion.x=peep.motion.x;
             event.motion.y=peep.motion.y;
@@ -249,6 +256,7 @@ static string CommandModifier()
         return "";
 }
 
+#if 0
 static unsigned char fix_SDL_Keypad(SDLKey key)
 {
     // Fixed keypad for 0..9, / and .
@@ -257,6 +265,7 @@ static unsigned char fix_SDL_Keypad(SDLKey key)
     if( key == SDLK_KP_DIVIDE ) return '/';
     return 0;
 }
+#endif
 
 //
 //  SDL DRIVER CORE
@@ -293,45 +302,45 @@ Driver::Driver(int screenwidth,int screenheight,bool _fullscreen,int physwidth,i
         }
     }
 
-    Uint32 flags=(fullscreen ? SDL_FULLSCREEN : 0);
-    //      flags|=SDL_HWSURFACE;
+    Uint32 flags=(fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+    if (0 != SDL_CreateWindowAndRenderer(physw, physh, flags, &window,
+                &renderer))
+        throw Error::IO("Failed to create win&renderer",SDL_GetError());
+    screen = SDL_CreateRGBSurface(0, physw, physh, 32, 0x00FF0000, 0x0000FF00,
+            0x000000FF, 0xFF000000);
+    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888,
+            SDL_TEXTUREACCESS_STREAMING, physw, physh);
 
-    Uint32 bpp;
-
-    bpp=SDL_VideoModeOK(physw,physh,32,flags);
-    if(bpp < 32)
-    {               
-        bpp=SDL_VideoModeOK(physw,physh,16,flags);
-
-        if(bpp < 16)
-            throw Error::IO("Driver::Driver(bool)","No suitable video mode found, needs 16bpp.");
+    if (fullscreen)
+    {
+        SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+        SDL_RenderSetLogicalSize(renderer, physw, physh);
     }
 
     string caption="Gccg v"VERSION" ";
     caption+=Database::game.Gamedir();
-    SDL_WM_SetCaption(caption.c_str(),"Gccg");
+    SDL_SetWindowTitle(window, caption.c_str());
 
 #ifdef WIN32
     main_icon=IMG_Load(CCG_DATADIR"/graphics/icon32.jpg");
 #else
     main_icon=IMG_Load(CCG_DATADIR"/graphics/icon32.jpg");
 #endif
-    SDL_WM_SetIcon(main_icon,NULL);
+    SDL_SetWindowIcon(window, main_icon);
 
-    screen = SDL_SetVideoMode(physw, physh, bpp, flags);
     output = screen;
     surface.resize(100);
     surface[0]=screen;
     output_surface=0;
 
-    SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
+    //SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,SDL_DEFAULT_REPEAT_INTERVAL);
 
     if(!screen)
         throw Error::IO("Driver::Driver(bool)",SDL_GetError());
 
     TTF_Init();
 
-    SDL_EnableUNICODE(1);
+    //SDL_EnableUNICODE(1);
 
     control=false;
     shift=false;
@@ -340,6 +349,7 @@ Driver::Driver(int screenwidth,int screenheight,bool _fullscreen,int physwidth,i
     mouse2=false;
     mouse3=false;
 
+#if 0
     char drivername[128];
     SDL_VideoDriverName(drivername, sizeof(drivername));
     const SDL_VideoInfo* info = SDL_GetVideoInfo();
@@ -352,6 +362,7 @@ Driver::Driver(int screenwidth,int screenheight,bool _fullscreen,int physwidth,i
     cout << Localization::Message("  HW Video memory = %sMB", ToString(info->video_mem/1024)) << endl;
     cout << Localization::Message("  HW Surface = %s", screen->flags&SDL_HWSURFACE ? "Yes" : "No") << endl;
     cout << Localization::Message("  BPP = %s", ToString((int)screen->format->BitsPerPixel)) << endl;
+#endif
 
 #ifdef WIN32
     // PERF_IMPROVEMENT: Avoid SDL_Image to load/unload shared libs on every image
@@ -404,13 +415,12 @@ int Driver::AllocateSurface(int w,int h)
 
     SDL_Surface* s;
 
-    s=SDL_CreateRGBSurface(SDL_SWSURFACE|SDL_SRCALPHA|SDL_RLEACCEL,w,h,screen->format->BitsPerPixel,screen->format->Rmask,screen->format->Gmask,screen->format->Bmask,screen->format->Amask);
+    s=SDL_CreateRGBSurface(0,w,h,screen->format->BitsPerPixel,screen->format->Rmask,screen->format->Gmask,screen->format->Bmask,screen->format->Amask);
 
     if(s==0)
         throw Error::Memory("Driver::AllocateSurface(int,int)");
 
-    surface[i]=SDL_DisplayFormatAlpha(s);
-    SDL_FreeSurface(s);
+    surface[i]=s;
 
     if(surface[i]==0)
         throw Error::Memory("Driver::AllocateSurface(int,int)");
@@ -488,11 +498,14 @@ int Driver::SurfaceHeight(int num) const
 
 void Driver::Fullscreen(bool mode)
 {
+    assert (0 && "FIXME");
+#if 0
     if(mode!=fullscreen)
     {
         fullscreen=mode;
         SDL_WM_ToggleFullScreen(screen);
     }
+#endif
 }
 
 void Driver::Beep()
@@ -503,6 +516,8 @@ void Driver::Beep()
 
 void Driver::Blink(int enabled)
 {
+    assert (0 && "FIXME");
+#if 0
     // A very lame attempt to drag the user attention, since SDL doesn't provide real features for this.
     // Just blink the main window icon and title (and in app. toolbar)
     // Might be able to get something nicer using system dependant functions, but so far it seems ok
@@ -525,6 +540,7 @@ void Driver::Blink(int enabled)
         caption+=Database::game.Gamedir();
         SDL_WM_SetCaption(caption.c_str(),"Gccg");
     }
+#endif
 }
 
 void Driver::UpdateScreen(int x0,int y0,int w,int h)
@@ -555,12 +571,23 @@ void Driver::UpdateScreen(int x0,int y0,int w,int h)
             return;
         y0=0;
     }
-    SDL_UpdateRect(screen,x0,y0,w,h);
+    SDL_Rect r;
+    r.x = x0;
+    r.y = y0;
+    r.w = w;
+    r.h = h;
+    SDL_UpdateTexture(texture, NULL, screen->pixels, screen->pitch);
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, texture, &r, &r);
+    SDL_RenderPresent(renderer);
 }
 
 void Driver::UpdateScreen()
 {
-    SDL_UpdateRect(screen,0,0,physw,physh);
+    SDL_UpdateTexture(texture, NULL, screen->pixels, screen->pitch);
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    SDL_RenderPresent(renderer);
 }
 
 void Driver::DrawCardImage(int imagenumber,int x,int y,int size,int angle,int alpha)
@@ -574,14 +601,14 @@ void Driver::DrawCardImage(int imagenumber,int x,int y,int size,int angle,int al
 
     // we keep the mode as SDL_ALPHA_OPAQUE always, unless a different alpha is specified
     if (alpha != 255)
-        SDL_SetAlpha(cardimage[imagenumber][size][angle], SDL_SRCALPHA, alpha);
+        SDL_SetSurfaceAlphaMod(cardimage[imagenumber][size][angle], alpha);
 
     // blit graphic across.  <srcrect> is NULL: blit entire object
     SDL_BlitSurface(cardimage[imagenumber][size][angle], NULL, output, &dest);
 
     if (alpha != 255)
-        // use 0 to turn off alpha-blending
-        SDL_SetAlpha(cardimage[imagenumber][size][angle], 0, SDL_ALPHA_OPAQUE);
+        SDL_SetSurfaceBlendMode(cardimage[imagenumber][size][angle],
+                SDL_BLENDMODE_NONE);
 }
 
 int Driver::CardWidth(int imagenumber,int size,int angle)
@@ -751,11 +778,13 @@ Command Driver::WaitCommand(int delay)
 
     SDL_Delay(delay);
 
-    event.type=SDL_NOEVENT;
+    event.type=SDL_FIRSTEVENT;
 
     if(!GetEvent(event) && state!=2)
         return ret;
 
+#if 0
+    //TODO: FIXME
     // Handle application input focus
     if(event.type==SDL_ACTIVEEVENT && (event.active.state & SDL_APPINPUTFOCUS))
     {
@@ -769,6 +798,7 @@ Command Driver::WaitCommand(int delay)
         ret.command="redraw";
         return ret;
     }
+#endif
 
     // Handle quit event.
     if(event.type==SDL_QUIT)
@@ -784,8 +814,8 @@ Command Driver::WaitCommand(int delay)
 
         ret.command=CommandModifier()+"key";
         ret.argument=SDL_GetKeyName(event.key.keysym.sym);
-        ret.key=char(event.key.keysym.unicode & 0xff);
-        if( ret.key == 0 ) ret.key = fix_SDL_Keypad(event.key.keysym.sym);
+        ret.key=char(event.key.keysym.sym & 0xff);
+        //if( ret.key == 0 ) ret.key = fix_SDL_Keypad(event.key.keysym.sym);
 
         return ret;
     }
@@ -797,26 +827,29 @@ Command Driver::WaitCommand(int delay)
 
         ret.command=CommandModifier()+"key up";
         ret.argument=SDL_GetKeyName(event.key.keysym.sym);
-        ret.key=char(event.key.keysym.unicode & 0xff);
-        if( ret.key == 0 ) ret.key = fix_SDL_Keypad(event.key.keysym.sym);
+        ret.key=char(event.key.keysym.sym & 0xff);
+        //if( ret.key == 0 ) ret.key = fix_SDL_Keypad(event.key.keysym.sym);
 
         return ret;
     }
 
     // Handle mouse wheel
-    if(event.type==SDL_MOUSEBUTTONDOWN && event.button.button==SDL_BUTTON_WHEELUP)
+    if(event.type==SDL_MOUSEWHEEL)
     {
-        ret.x=event.button.x;
-        ret.y=event.button.y;
-        ret.command="wheel up";
-        return ret;
-    }
-    else if(event.type==SDL_MOUSEBUTTONDOWN && event.button.button==SDL_BUTTON_WHEELDOWN)
-    {
-        ret.x=event.button.x;
-        ret.y=event.button.y;
-        ret.command="wheel down";
-        return ret;
+        if (event.wheel.y < 0)
+        {
+            ret.x=event.button.x;
+            ret.y=event.button.y;
+            ret.command="wheel up";
+            return ret;
+        }
+        else
+        {
+            ret.x=event.button.x;
+            ret.y=event.button.y;
+            ret.command="wheel down";
+            return ret;
+        }
     }
 
     // Mouse state 1: dragging
@@ -1299,7 +1332,8 @@ scale_and_return:
     if(!newcard)
         goto out_of_memory;
 
-    cardimage[imagenumber][size][angle]=SDL_DisplayFormat(newcard);
+    cardimage[imagenumber][size][angle] =
+        SDL_ConvertSurface(newcard, screen->format, 0);
     SDL_FreeSurface(newcard);
 
     newcard=0;
@@ -1319,7 +1353,7 @@ int Driver::LoadImage(const string& filename,Color c)
     if(!img)
         throw Error::IO("Driver::LoadImage(const string&,int,int,int)",string("Unable to load file '"+filename+"': ")+SDL_GetError());
     if(!c.invisible)
-        SDL_SetColorKey(img,SDL_SRCCOLORKEY,SDL_MapRGB(img->format,c.r,c.g,c.b));
+        SDL_SetColorKey(img,SDL_TRUE,SDL_MapRGB(img->format,c.r,c.g,c.b));
 
     imgscaled=img;
     if(needscale)
@@ -1328,12 +1362,12 @@ int Driver::LoadImage(const string& filename,Color c)
         if(!imgscaled)
             throw Error::Memory("Driver::LoadImage(const string&,Color)");
         if(!c.invisible)
-            SDL_SetColorKey(imgscaled,SDL_SRCCOLORKEY,SDL_MapRGB(imgscaled->format,c.r,c.g,c.b));
+            SDL_SetColorKey(imgscaled,SDL_TRUE,SDL_MapRGB(imgscaled->format,c.r,c.g,c.b));
         SDL_FreeSurface(img);
     }
 
     image_collection_original.push_back(imgscaled);
-    img=SDL_DisplayFormat(imgscaled);
+    img=SDL_ConvertSurface(imgscaled, screen->format, 0);
     if(!img)
         throw Error::Memory("Driver::LoadImage(const string&,Color)");
     image_collection.push_back(img);
@@ -1381,14 +1415,14 @@ void Driver::DrawImage(int image_number,int x,int y,int scl,int alpha,Color colo
 
         img=zoomSurface(img,double(scl)/double(100),double(scl)/double(100),SMOOTHING_ON);
         if(!colorkey.invisible)
-            SDL_SetColorKey(img,SDL_SRCCOLORKEY,SDL_MapRGB(img->format,colorkey.r,colorkey.g,colorkey.b));
+            SDL_SetColorKey(img,SDL_TRUE,SDL_MapRGB(img->format,colorkey.r,colorkey.g,colorkey.b));
     }
 
     if(alpha!=255)
-        SDL_SetAlpha(img,SDL_SRCALPHA,alpha);
+        SDL_SetSurfaceAlphaMod(img, alpha);
     SDL_BlitSurface(img,0,output,&dest);
     if(alpha!=255)
-        SDL_SetAlpha(img,SDL_SRCALPHA,SDL_ALPHA_OPAQUE);
+        SDL_SetSurfaceBlendMode(img, SDL_BLENDMODE_NONE);
 
     if(scl!=100)
         SDL_FreeSurface(img);
@@ -1516,7 +1550,7 @@ void Driver::DrawTextToSurface(int fontnumber,int pointsize,int x0,int y0,const 
 
         //          shadow=TTF_RenderText_Blended(font[fontnumber][pointsize],text.c_str(),black);
         shadow=TTF_RenderText_Shaded(font[fontnumber][pointsize],text.c_str(),black,black);
-        SDL_SetColorKey(shadow,SDL_SRCCOLORKEY,SDL_MapRGB(shadow->format,0,0,0));
+        SDL_SetColorKey(shadow,SDL_TRUE,SDL_MapRGB(shadow->format,0,0,0));
 
         if(!shadow)
         {
@@ -2165,7 +2199,7 @@ static SDL_Surface* CreateOwnCard(int imagenumber)
     SetPixel(ret,w-3,h-1,SDL_MapRGB(ret->format,10,11,12));
     SetPixel(ret,w-4,h-1,SDL_MapRGB(ret->format,10,11,12));
     SetPixel(ret,w-2,h-2,SDL_MapRGB(ret->format,10,11,12));
-    SDL_SetColorKey(ret,SDL_SRCCOLORKEY,SDL_MapRGB(ret->format,10,11,12));
+    SDL_SetColorKey(ret,SDL_TRUE,SDL_MapRGB(ret->format,10,11,12));
 
     if(SDL_MUSTLOCK(ret))
         SDL_UnlockSurface(ret);
