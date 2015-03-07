@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Client-Debug|Win32">
+      <Configuration>Client-Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Client-Release|Win32">
+      <Configuration>Client-Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C539539B-9617-476E-84A6-E464E258A363}</ProjectGuid>
+    <RootNamespace>gccgsource089230</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Client-Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Client-Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Client-Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Client-Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Client-Debug|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Client-Debug|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'">$(Configuration)\</IntDir>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'">false</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'">true</GenerateManifest>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Client-Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Client-Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Client-Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'" />
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'">D:\Projects\Gccg\SDL-1.2.14\include;D:\Projects\Gccg\SDL_net-1.2.7;D:\Projects\Gccg\SDL_mixer-1.2.11;D:\Projects\Gccg\SDL_image-1.2.10;D:\Projects\Gccg\SDL_ttf-2.0.10;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'">D:\Projects\Gccg\SDL-1.2.14\VisualC\SDL\Release;D:\Projects\Gccg\SDL_net-1.2.7\VisualC\Release;D:\Projects\Gccg\SDL-1.2.14\VisualC\SDLmain\Release_NOSTDIO;D:\Projects\Gccg\SDL_ttf-2.0.10\VisualC\Release;D:\Projects\Gccg\SDL_image-1.2.10\VisualC\Release;D:\Projects\Gccg\SDL_mixer-1.2.11\VisualC\Release;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Client-Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.\include;..\..\SDL\SDL-1.2.13\include;..\..\SDL\SDL_net-1.2.7\include;..\..\SDL\SDL_image-1.2.6\include;..\..\SDL\SDL_ttf-2.0.9\include;..\..\SDL\SDL_mixer-1.2.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;CCG_DATADIR=".";PACKAGE="GCCG";SYSTEM="x86 Win32 debug build by Wlk "__DATE__;CCG_SAVEDIR="./save";STACK_TRACE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>SDL.lib;SDL_net.lib;SDLmain.lib;SDL_ttf.lib;SDL_image.lib;SDL_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)ccg_client_dbg.exe</OutputFile>
+      <AdditionalLibraryDirectories>..\..\SDL\SDL-1.2.13\lib;..\..\SDL\SDL_net-1.2.7\lib;..\..\SDL\SDL_ttf-2.0.9\lib;..\..\SDL\SDL_image-1.2.6\lib;..\..\SDL\SDL_mixer-1.2.8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <StackReserveSize>0</StackReserveSize>
+      <StackCommitSize>0</StackCommitSize>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>.\include;..\..\SDL\SDL-1.2.13\include;..\..\SDL\SDL_net-1.2.7\include;..\..\SDL\SDL_image-1.2.6\include;..\..\SDL\SDL_ttf-2.0.9\include;..\..\SDL\SDL_mixer-1.2.8\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;CCG_DATADIR=".";PACKAGE="GCCG";SYSTEM="x86 Win32 build by Wlk "__DATE__;CCG_SAVEDIR="./save";STACK_TRACE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>dxguid.lib;Winmm.lib;Ws2_32.lib;SDL.lib;SDL_net.lib;SDLmain.lib;SDL_ttf.lib;SDL_image.lib;SDL_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)ccg_client.exe</OutputFile>
+      <AdditionalLibraryDirectories>..\..\SDL\SDL-1.2.13\lib;..\..\SDL\SDL_net-1.2.7\lib;..\..\SDL\SDL_ttf-2.0.9\lib;..\..\SDL\SDL_image-1.2.6\lib;..\..\SDL\SDL_mixer-1.2.8\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AllowIsolation>true</AllowIsolation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="carddata.cpp" />
+    <ClCompile Include="client.cpp" />
+    <ClCompile Include="compat.cpp" />
+    <ClCompile Include="data.cpp" />
+    <ClCompile Include="data_filedb.cpp" />
+    <ClCompile Include="driver.cpp" />
+    <ClCompile Include="game-draw.cpp">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Client-Debug|Win32'">SDL_VERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Client-Release|Win32'">SDL_VERSION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="interpreter.cpp" />
+    <ClCompile Include="localization.cpp" />
+    <ClCompile Include="parser.cpp" />
+    <ClCompile Include="parser_lib.cpp" />
+    <ClCompile Include="parser_libcards.cpp" />
+    <ClCompile Include="parser_libnet.cpp" />
+    <ClCompile Include="sdl-driver.cpp" />
+    <ClCompile Include="SDL_rotozoom.c" />
+    <ClCompile Include="security.cpp" />
+    <ClCompile Include="tools.cpp" />
+    <ClCompile Include="xml_parser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\carddata.h" />
+    <ClInclude Include="include\compat.h" />
+    <ClInclude Include="include\cow_vector.h" />
+    <ClInclude Include="include\data.h" />
+    <ClInclude Include="include\data_filedb.h" />
+    <ClInclude Include="include\driver.h" />
+    <ClInclude Include="include\error.h" />
+    <ClInclude Include="include\game.h" />
+    <ClInclude Include="include\localization.h" />
+    <ClInclude Include="include\parser.h" />
+    <ClInclude Include="include\parser_functions.h" />
+    <ClInclude Include="include\SDL_rotozoom.h" />
+    <ClInclude Include="include\security.h" />
+    <ClInclude Include="include\tools.h" />
+    <ClInclude Include="include\triggers.h" />
+    <ClInclude Include="include\version.h" />
+    <ClInclude Include="include\xml_parser.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

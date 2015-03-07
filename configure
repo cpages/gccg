@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo autoconf sucks, just run 'make' and tune Makefile manually if needed
+
+

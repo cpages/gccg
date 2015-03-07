@@ -1,0 +1,86 @@
+v0.9.7
+
+* Added server support for team games.
+* Added the ability to whisper to another player, or to all teammates.
+* Changed server visibility system to be more expressive.
+* Allow servers to reconnect after a game without closing and reloading XML files.
+* Added new deck legality procedures with less overhead.
+* Product generation now prevents duplicate cards, unless specifically requested otherwise.
+* Added support for attribute "flipid", for table-only custom back side images.
+* Allow tab completion on commands, in addition to users.
+* Allow card books to set spacing based on a specified card's dimensions.
+* Allow input bar to move to top of screen with "/set input top".
+* Added the ability to create deck groups to organize the deck selection menu.
+* Several new commands, including:
+    /newdeck to create an empty deck and display instructions
+    /clearcache to clean out book files
+    /reconnect to reconnect to server without closing the program
+    /addpart to create arbitrary named deck parts
+    /sets to look for all reprints of a named card
+* Fixed exploit where card prices could be set to infinity or Not-a-Number.
+* Fixed crashing on division or modular division by zero.
+* Added dependency tracking to gccg_package manager.
+
+
+v0.9.6
+
+* Symbols in /select now works properly.
+* Themes: colors and backgrounds for each game.	
+* Random shuffle for player seats in the beginning of the multiplayer.
+* More consitency with drawing colors in C++ code.
+* Generic {R,G,B} coloring tag in text.
+* Fix canonical_image() to add #N for multiple copies of a card.
+* Support for /give <player> <cardname>.
+* Code cleanup and reorganization for server management.
+* New table flag --tournament for tournament games.
+* Support for Squirrel.
+* Allow secret trading in sealed mode when players in table.
+* Fix invisibility bug on scaled counters.
+* Deck registration dates stored.
+
+v0.9.5
+
+* Reorganized source code to src-directory and build results to tmp-directory.	
+* Rotating logs when restarting server.
+* Building binaries to architecture depended locations.
+* Update launch scripts to use new binaries both client and server.
+* Reveal card identity to owner of it automaticallty when loading a game.
+* Added 'default' counter without any particular color to slot Alt+1.
+* Removed numbers and use dice symbols only for 6-sided dice.
+
+v0.9.3
+
+* Fix compiler warnings on -O3.
+* Avatar locations in save game.
+* Added alias /load for /loadgame.
+* Synchronize deck movements on table.
+* Save deck locations on table to the save file.
+* Sound support.
+* Meta server drops buy messages for anything less than $1.00.
+* Improved collection caching.
+* Support for torrent downloading from meta server.
+* Added full collection refresh when sealed character logs in.
+* Initial support for dice pictures when rolling d6.
+  (Numbers are removed in future when clients are up to date.)
+* New command argument /kicktable all.
+
+v0.9
+
+* Fixes in long text rendering.
+* New management tools for image conversions and checking.
+* Lot of cleanup work and getting rid of obsolete tools and files.
+* Server: --server-ip to define connection ip explicitly.
+* Added free fonts as default. Option --windows-fonts.
+* Game and ports list in games.dat.
+* New tools for server maintenance and cleanup for old server scripts.
+* Add game directories to logging of server scripts.
+* Changed background cards as 'A card' (or 'A site' etc.)
+* Control middle-click uses real identity of face down card.
+* Dropped list of warnings from server rules check.
+* New command /test in tables which is enabled with --debug.
+* New visuals when touchg objects.
+* Shuffle for cards set aside.
+* Scripts to create torrents.
+* Server backup script.
+* Opponent hand menu: Set Aside
+* Support for exchange of torrent version and automatic download of newer torrent.

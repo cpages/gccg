@@ -1,0 +1,215 @@
+Generic
+-------
+
+v0.9.7
+[X] Research on audio/visual notification when talked to while not in focus
+[ ] Find a way to normalize all sounds (try using replaygain tags).
+[ ] Some command to directly change 'username' file in windows.
+[ ] Player time counting.
+[X]   Time counting protocol for table to assign time running to a given player.
+[ ]   Hook timing commands to certain phases.
+[ ]   Time display and update for player.
+[X]   Time query command showing time spent by each player and percentages.
+[ ]   Saving/loading time and turn to/from save file.
+[ ] 'make installer' to update windows install package.
+[ ] /fetch command (see Mtg-specific command supplied).
+[ ] Limit amount of --bet in the table server.
+[ ] Cleanup old function documentation generator and move to new build/sites location.
+[ ]   Separate reference manual pages.
+[ ]   Check documentation generation and fix where needed.
+[ ]   Update Makefile.
+[ ] /text to add arbitrary text to card.
+[ ] Make some font size as base size and scale inline images according
+    to the current font size vs base size ratio.
+[X] Improve shuffle effect speed.
+[ ] Transparency color scale 0-100: SDL_ALPHA_TRANSPARENT (0)-SDL_ALPHA_OPAQUE (255)
+[X]   Box drawing.
+[ ]   Text rendering.
+[X]   set_textcolor(), set_fgcolor(), set_bgcolor().
+[ ]   Examine is it possible to change color-key to proper invisibility support for png.
+[ ] Finalize log playback mode for client.
+[ ] Sound for 1+1 (game specific).
+[ ] 'Removed from game' deck. Ctrl+Del from that will remove permanently.
+[ ]   Try deck based model, where the deck is off-screen by default.
+[ ]   Looking at your pile and using it.
+[ ]   Option: shared 'removed from game' deck.
+[ ]   See if Lotr dead pile can be integrated just by moving deck to visible area.
+[x] /set nosound yes.
+[ ] Find a way to leave attributes unsorted for ctrl+h output
+[ ] Implement live update of F6 screen for player.
+    Maybe also ability to comment.
+    Must not replicate messages on tournament mode table.
+[ ] Try to make cleanup and move all game specific scripts to the scripts/Game.
+[ ] Pick card.number in client through invisible objects.
+[ ] UTF8 support in XML and rendering.
+[ ] Entered-flag for /who listing. Update players for status changes.
+[ ] Add phone number (similar to email) setting. Maybe some other optional contact methods as well.
+[X] Check that lc() and uc() doesn't touch {SYM}. Verify with /select .. has.
+[X] Inform opponent about card number what he is moving when setting aside.
+[ ] Check sets and card counts announced by server and give warning if not matching.
+[ ] Some function to check if system is not functional in client. Use
+    it on places like import, export, etc..
+[X] Support for XML-files in extra repositories.
+[ ] Support for deck files in extra repositories.
+
+v0.9.8
+[ ] Try 'scons' based building.
+[ ] Redesign generic deck statistics API.
+[x] Create 'central server' that combines factory and meta servers.
+[x] Allow drafting.
+[ ] Build against SDL2.
+
+v1.0
+
+Linux
+-----
+
+[ ] Create new linux-i386-libs package.
+[ ] Update web page.
+
+OSX
+---
+
+[ ] Create new darwin-i386-libs package.
+[ ] Update web how to install binary version.
+
+Windows
+-------
+
+
+Metw
+----
+
+v1.3
+[ ] disallow Old Forest site for DC events, old forest is a region :)
+[ ] DC rules:
+[x]   Dwarf-lord
+[x]   Dragon-lord
+[ ]   Man-lord
+[ ]   Dunadan-lord
+[ ]   War-lord
+[ ]   Court of Ardor
+[x] DC Elf: Allow for minion Animal & wolf factions for Elf-lord alignment
+[ ] DC: Allow an extra sideboard vs Balrog and Dragon-lord players during deck construction
+[ ] DC: Dragon: Allow hero characters in Dragon-lord decks (up to a mind of 6)
+[ ] DC: Allow for up to 1 avatar for every 20 cards of the deck (max for fallen aligment without extra 
+    sidebord is 114 I believe so max would be 5 avatars per 100+ card decks
+[X] Add FB for sale; it is in or not?
+[ ] Sounds: Find/Make better sounds for avatars
+[ ] Unhappy Blows does not show its correct offifcal errata
+[ ] Placement of many hazards events should be corrected (e.g. Mouth
+    of Sauron should not be placed with Permanen-events; all events
+    playable on character or the company should not be placed on the
+    standart Perm-pile) here is the complete list: Aamumeren Isä, Big
+    Bats, Black Crows, Come at Need, Death-carrying Vermin, Endless
+    Whispers, Faladrim, Fangorn, Fled into Darkness, Finglas, Gift from
+    Sauron, Great Serects Buried there, Icy Touch, Jäänainen, Lord
+    of the Haven, Nothing to eat or drink, One of the Nine, Out of the
+    Black Sky, Snow-blindness, Something has slipped, Sons of Elrond, The
+    Pale Sword, To get you away, War-wargs, War-wolves, White Vision,
+    Wolf-riders.
+    OR: Allow turning of auto-placement completelty off.
+[X] Add the DC northern waste region map and make command possible to open either one map.
+[ ] Nine rings release, postponed.
+
+Netrunner
+---------
+
+Lotr
+-----
+
+v1.2
+[ ] King symbol background is not pure black
+[ ] Add more shadow decks for solo mode
+[ ] Re-export all decks in Gccg-format.
+[ ] Add random R to Refl, and increase price to 7$.
+[ ] doc/Lotr
+[X] Fix cards #15S194, #18C103, #18C129, #6C52 
+
+Mtg
+---
+
+[ ] post Zendikar wording updates
+[ ] Exile stack (old Removed from the Game)
+[ ] doc/Mtg
+
+Cthulhu
+-------
+
+[ ] XML files.
+[ ]   Arkham.
+[ ]   Arkham premium.
+[ ]   Dunwich.
+[ ]   Eldritch premium.
+[ ]   Forgotten cities.
+[ ]   Masks.
+[ ]   Conspiracies.
+[ ]   Eldritch.
+[ ]   Forbidden relics.
+[ ]   Kingsport.
+[ ]   Spawn of madness.
+[ ] Client basics.
+[X]   Basic launch and visible collection.
+[X]   Deck creation.
+[X]   Inline image symbols and their tags.
+[ ]   Default filtering.
+[ ]   Shortcuts for inline image symbols.
+[ ] Server basics.
+[ ]   Factory server.
+[X]     Minimal base files.
+[ ]     Distributions for products.
+[ ]   Meta server.
+[X]     Minimal base files.
+[ ]   Game server.
+[X]     Minimal base files.
+[ ] Card graphics (check after XML complete).
+[ ]   Arkham.
+[ ]   Arkham premium.
+[ ]   Dunwich.
+[ ]   Eldritch premium.
+[ ]   Forgotten cities.
+[ ]   Masks.
+[ ]   Conspiracies.
+[ ]   Eldritch.
+[ ]   Forbidden relics.
+[ ]   Kingsport.
+[ ]   Spawn of madness.
+[ ]   Card graphics mock ups.
+[ ] Game mode implementation.
+[X] doc/Cthulhu
+
+Pokemon
+-------
+
+[ ] Missing graphics: NG (Ariados) and NE (all).
+[ ] doc/Pokemon
+
+Vtes
+----
+
+[X] BUG: Deleting counters fast can gain you blood pool.
+
+Sw
+--
+
+Future Ideas
+------------
+
+[X] Tab completion for commands too
+[ ] New distribution system: cleanup svn, move it to source forge (switch to p2p).
+[ ]   Make generic file resolver in C++ code able to find from normal place and svn-dir.
+[ ]   Use file resolver for every file.
+[ ]   Clean all (C) material completely moving it to other branches.
+[ ]   Create minimal game system for all games with one single card (but lobby works).
+[ ]   Plan revision system having core and two packages for each addon (code, graphics).
+[ ]   Establish build system building complete client for all games, 1/platform.
+[ ]   Distribute extras in p2p network with clearly versioned names.
+[ ]   Move main trunk to source forge.
+[ ] Use shift to show deck contents from import list.
+[ ] Meta lobby to connect in "generic" mode before entering games.
+[ ]   Communication between meta servers and meta lobby to announce players.
+[ ]   Connect to the available server and game.
+[ ] Customizable (i.e. with user-set line spacing) in-game grid to snap/stack items.
+[ ] Maybe make second chat active only when clicked (show some colored border when active).
+[ ] In game menu to set graphic options (i.e. --geometry and --full)
+[ ] In game Token creator (i.e. in mtg with Name, Textbox, Power, Toughness...)
