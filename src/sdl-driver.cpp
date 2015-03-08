@@ -785,22 +785,31 @@ Command Driver::WaitCommand(int delay)
     if(!GetEvent(event) && state!=2)
         return ret;
 
-#if 0
-    //TODO: FIXME
-    // Handle application input focus
-    if(event.type==SDL_ACTIVEEVENT && (event.active.state & SDL_APPINPUTFOCUS))
+    // Handle window events
+    if(event.type==SDL_WINDOWEVENT)
     {
-        ret.command= event.active.gain ? "input gained" : "input lost";
-        return ret;
+        bool handled = true;
+        switch (event.window.event)
+        {
+            case SDL_WINDOWEVENT_FOCUS_GAINED:
+                ret.command = "input_gained";
+                break;
+            case SDL_WINDOWEVENT_FOCUS_LOST:
+                ret.command = "input_lost";
+                break;
+            case SDL_WINDOWEVENT_SHOWN:
+                //fall through
+            case SDL_WINDOWEVENT_EXPOSED:
+                ret.command = "redraw";
+                break;
+            default:
+                // Do nothing for now
+                handled = false;
+                break;
+        }
+        if (handled)
+            return ret;
     }
-
-    // Handle screen refresh.
-    if(event.type==SDL_VIDEOEXPOSE || (event.type==SDL_ACTIVEEVENT && event.active.gain==1 && (event.active.state & SDL_APPACTIVE)))
-    {
-        ret.command="redraw";
-        return ret;
-    }
-#endif
 
     // Handle quit event.
     if(event.type==SDL_QUIT)
