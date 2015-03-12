@@ -422,6 +422,12 @@ void Table::Main(const string& server,int port,string username)
 			parser.UnsetVariable("key.ascii");
 		    }
 		}
+		else if(command.command=="text")
+        {
+			parser.SetVariable("text", command.argument);
+			TryTrigger("text","",ret);
+			parser.UnsetVariable("text");
+        }
 		else
 		{
 		    TryTrigger(command.command,command.argument,ret);

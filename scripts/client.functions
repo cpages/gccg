@@ -5977,8 +5977,8 @@ def PressKey
       Input("{lb}");
     else if(ARG[1]=="}")
       Input("{rb}");
-    else if(ARG[1]!="")
-      Input(ARG[1]);
+#else if(ARG[1]!="")
+#      Input(ARG[1]);
     else
       ok=0;
     t=pop();

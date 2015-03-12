@@ -73,7 +73,7 @@ ccg_text_client: $(CLIENT) tmp/text-driver.o tmp/game-text-version.o
 
 ccg_client: $(CLIENT) tmp/sdl-driver.o tmp/game-sdl-version.o
 	$(LD) -o ccg_client $(CLIENT) tmp/sdl-driver.o tmp/game-sdl-version.o $(LIBS)
-	strip ccg_client
+	#strip ccg_client
 
 ccg_server: $(SERVER)
 	$(LD) -o ccg_server $(SERVER) $(LIBS_TEXT)

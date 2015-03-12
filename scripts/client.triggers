@@ -218,6 +218,11 @@ trigger "timer" "second" code
 # KEYBOARD SHORTCUTS
 # ==================
 
+trigger "text" "" code
+{
+    Input(text);
+}
+
 trigger "key" "" code
 {
     PressKey(key,key.ascii);

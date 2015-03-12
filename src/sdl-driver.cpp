@@ -818,6 +818,16 @@ Command Driver::WaitCommand(int delay)
         return ret;
     }
 
+    if(state==0 && event.type==SDL_TEXTINPUT)
+    {
+        SDL_GetMouseState(&ret.x,&ret.y);
+
+        ret.command="text";
+        ret.argument=string(event.text.text);
+
+        return ret;
+    }
+
     // Handle key press
     if(state==0 && event.type==SDL_KEYDOWN)
     {
