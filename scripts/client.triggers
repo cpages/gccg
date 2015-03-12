@@ -1,0 +1,503 @@
+#
+#    Gccg - Generic collectible card game.
+#    Copyright (C) 2001-2012 Tommi Ronkainen
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program, in the file license.txt. If not, write
+# to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.
+#
+##############################################################################
+#
+#                                 Generic client
+#
+##############################################################################
+
+#
+# INITIALIZATION AND EXIT
+# =======================
+
+trigger "init" "" code
+{
+  server.name_default="NO.DEFAULT.SERVER.FOR.THIS.GAME";
+  server.name=server.name_default;
+  mode="";
+
+  BGCOLOR=(117,84,31);
+  FGCOLOR=(255,255,255);
+  BRCOLOR=(211,172,95);
+  BGCOLOR2=(40,40,40);
+  FGCOLOR2=(255,255,255);
+  BRCOLOR2=(140,140,140);
+  TXCOLOR=(255,255,255);
+  BKBGCOLOR=(117,84,31);
+  BKBRCOLOR=(211,172,95);
+  BKTXCOLOR=(255,255,255);
+  INCOLOR=(255,255,255);
+  TABLE_SHADOW=0;
+}
+
+trigger "exit" "" code
+{
+  if(init_ok)
+    SaveAll();
+}
+
+#
+# START
+# =====
+
+trigger "init" "game" code
+{
+  randomize();
+
+  timer=(,);
+  timer_minute=(,);
+  book_refresh=(,);
+
+  deck_name=(,);
+  execute("common.include");
+
+  game.data=game_data();
+  GAME=game.data{"game"};
+  GAMEDIR=game.data{"gamedir"};
+
+  mode_object=(,);
+  mode_object{""}=(,);
+  mode_object{"chat"}=(,);
+  mode_object{"play"}=(,);
+  mode_object{"watch"}=(,);
+  mode_object{"playback"}=(,);
+
+  card.design.width=(card.width*design.width)/screen.width;
+  card.design.height=(card.height*design.height)/screen.height;
+
+  obj=0;
+
+  room.players=(,);
+  room.tables=(,);
+  product.images=(,);
+  product.objects=(,);
+  transfer.options=(,);
+  options.game=(,);
+
+  cardmap=(,);
+  cardmap{"I"}=(,);
+  cardmap{"E"}=(,);
+
+  if(!load("options"))
+    options=(,);
+  if(!load("logs"))
+    logs=(,);
+  if(!load("avatar"))
+    avatar=(,);
+
+  execute("client.functions");
+  execute(GAMEDIR+".include");
+
+  HELP{"any"}{"select"}[3]=HELP{"any"}{"select"}[3]+join(forall('"  {green}"+#+"{white} - "+FILTER_FUNCTIONS{#}[1]',keys(FILTER_FUNCTIONS)),"\n");
+
+  LoadAllRules();
+  LoadAllScripts();
+  
+  if(!load("bind"))
+    bind=(,);
+  if(!load("bindk"))
+    bindk=(,);
+  if(!load("price.default"))
+    price.default=(,);
+
+  if(game.bindings!=NULL)
+  {
+    for(b)(game.bindings)
+    {
+      if(!has_entry(b[0],bind))
+        bind{b[0]}=b[1];
+    }
+  }
+
+  if(!load("book.my_filters"))
+    book.my_filters=(,);
+
+  if(username=="Windows")
+    load("username");
+
+  Initialize();
+
+  if(!load("password"))
+    password=(,);
+  if(!load("serial"))
+  {
+    serial=right("000"+random(1000),3)+"-"+right("000"+random(1000),3)+"-"+right("000"+random(1000),3)+"-"+right("000"+random(1000),3);
+    save("serial");
+  }
+
+  if(VersionCompare(VERSION,MINIMUM_VERSION))
+  {
+    message(msg.box,"{red}{sz20}Your client binary is too old.");
+    message(msg.box,"{red}{sz20}Version v"+MINIMUM_VERSION+" required.");
+    message(msg.box,"{red}{sz20}If you have updated it, it means that new");
+    message(msg.box,"{red}{sz20}binary is not yet compiled for your platform.");
+    sleep(8);
+    quit();
+  }
+
+  if(username=="Windows")
+  {
+    username="";
+    message(msg.box,"{sz20}{red}You are Windows user and I am unable to determine your user name.");
+    message(msg.box,"{sz20}{red}You must set your username. Just type {yellow}/newuser <your_name>{red}.");
+  }
+  else
+  {
+    if(!has_entry(username,password))
+    {
+      password{username}=GeneratePassword();
+      save("password");
+    }
+    load("deck.name");
+    if(!load("decks"))
+      decks=(,);
+    if(!load("deck.groups"))
+      deck.groups=(,);
+    SelectDeck(deck.name);
+
+    InitializeConnection();
+
+  }
+
+  execute("init");
+  execute("init."+GAMEDIR);
+
+  init_ok=1;
+  screen.has_focus=1;
+  screen.alert_enabled=0;
+}
+
+#
+# TIMER LOOPS
+# ===========
+
+trigger "timer" "" code
+{
+  MainLoop();
+}
+
+trigger "timer" "minute" code
+{
+  TimerMinute();
+}
+
+trigger "timer" "5 seconds" code
+{
+  if(timer_minute!=(,))
+    Timer5Seconds();
+}
+
+trigger "timer" "15 seconds" code
+{
+  Timer15Seconds();
+}
+
+trigger "timer" "second" code
+{
+  if(timer!=(,))
+    Timer();
+}
+
+# KEYBOARD SHORTCUTS
+# ==================
+
+trigger "key" "" code
+{
+    PressKey(key,key.ascii);
+}
+
+trigger "shift key" "left shift" code
+{
+  KeyModifierDown("shift");
+}
+
+trigger "shift key" "right shift" as "shift key" "left shift"
+
+trigger "key up" "left shift" code
+{
+  KeyModifierUp("shift");
+}
+
+trigger "key up" "right shift" as "key up" "left shift"
+
+trigger "control key" "left ctrl" code
+{
+  KeyModifierDown("ctrl");
+}
+
+trigger "control key" "right ctrl" as "control key" "left ctrl"
+
+trigger "key up" "left ctrl" code
+{
+  KeyModifierUp("ctrl");
+}
+
+trigger "key up" "right ctrl" as "key up" "left ctrl"
+
+trigger "control key up" "left shift" code
+{
+  KeyModifierUp("shift");
+}
+
+trigger "control key up" "right shift" as "control key up" "left shift"
+
+trigger "shift control key" "left shift" code
+{
+  KeyModifierDown("shift");  
+}
+
+trigger "shift control key" "right shift" as "shift control key" "left shift"
+
+trigger "shift control key" "left ctrl" code
+{
+  KeyModifierDown("ctrl");
+}
+
+trigger "shift control key" "right ctrl" as "shift control key" "left ctrl"
+
+trigger "shift key up" "left ctrl" code
+{
+  KeyModifierUp("ctrl");
+}
+
+trigger "shift key up" "right ctrl" as "shift key up" "left ctrl"
+
+trigger "alt key" "left alt" code
+{
+  KeyModifierDown("alt");  
+}
+
+trigger "key up" "left alt" code
+{
+  KeyModifierUp("alt");  
+}
+
+trigger "shift alt key" "left shift" code
+{
+  KeyModifierDown("shift");  
+}
+
+trigger "shift alt key" "right shift" as "shift alt key" "left shift"
+
+trigger "alt key up" "left shift" code
+{
+  KeyModifierUp("shift");  
+}
+
+trigger "alt key up" "right shift" as "alt key up" "left shift"
+
+trigger "shift key up" "left alt" code
+{
+  KeyModifierUp("alt");
+}
+
+trigger "shift alt key" "left alt" code
+{
+  KeyModifierDown("alt");  
+}
+
+trigger "control alt key" "left alt" code
+{
+  KeyModifierDown("alt");  
+}
+
+trigger "control alt key" "left ctrl" code
+{
+  KeyModifierDown("ctrl");
+}
+
+trigger "control alt key" "right ctrl" as "control alt key" "left ctrl"
+
+trigger "control key up" "left alt" code
+{
+  KeyModifierUp("alt"); 
+}
+
+trigger "alt key up" "left ctrl" code
+{
+  KeyModifierUp("ctrl");
+}
+
+trigger "alt key up" "right ctrl" as "alt key up" "left ctrl"
+
+# NOTE: Triples not yet implemented.
+
+#
+# MOUSE EVENTS
+# ============
+
+trigger "right drag begin" "" code
+{
+  if(object.name != NULL)
+  {
+    if(trigger("right click",object.name)==NULL)
+      trigger("right click","");
+  }
+  else
+    trigger("right click","");
+}
+
+trigger "left drag begin" "" code
+{
+  MouseLeftDragBegin();
+}
+
+trigger "left drag end" "" code
+{
+  MouseLeftDragEnd();
+}
+
+trigger "left click" "" code
+{
+  MouseLeftClick();
+}
+
+trigger "alt left click" "" code
+{
+}
+
+trigger "middle click" "" code
+{
+  MouseMiddleClick();
+}
+
+trigger "control middle click" "" code
+{
+  MouseControlMiddleClick();
+}
+
+trigger "control middle drag begin" "" code
+{
+  MouseControlMiddleClick();
+}
+
+trigger "alt left click" "" code
+{
+  MouseMiddleClick();
+}
+
+trigger "alt middle click" "" code
+{
+  MouseMiddleClick();
+}
+
+trigger "wheel up" "" code
+{
+  MouseWheel(0);
+}
+
+trigger "wheel down" "" code
+{
+  MouseWheel(1);
+}
+
+trigger "middle drag begin" "" code
+{
+  MouseMiddleClick();
+}
+
+trigger "middle drag end" "" code
+{
+}
+
+trigger "move object" "" code
+{
+  MouseMoveObject();
+}
+
+trigger "control left click" "" code
+{
+  MouseControlLeftClick();
+}
+
+trigger "control alt left click" "" code
+{
+  MouseControlMiddleClick();
+}
+
+trigger "control alt middle click" "" code
+{
+  MouseControlMiddleClick();
+}
+
+trigger "control left drag begin" "" code
+{
+  MouseControlLeftDragBegin();
+}
+
+trigger "control left drag end" "" code
+{
+  MouseControlLeftDragEnd();
+}
+
+trigger "shift control move" "" code
+{
+  MouseMove("shift ctrl");
+}
+
+trigger "control move" "" code
+{
+  MouseMove("ctrl");
+}
+
+trigger "shift move" "" code
+{
+  MouseMove("shift");
+}
+
+trigger "move" "" code
+{
+  MouseMove("");
+}
+
+trigger "input gained" "" code
+{
+  screen.has_focus=1;
+  screen.alert_enabled=0;
+}
+
+trigger "input lost" "" code
+{
+  screen.has_focus=0;  
+}
+
+#
+# MENUS
+# =====
+
+trigger "right click" "" code
+{
+  MenuByContext();
+}
+
+trigger "menu" "" code
+{
+  MenuClick();
+}
+
+#
+# CLIPBOARD
+# =========
+
+trigger "paste" "" code
+{
+    Input(clipboard.text);
+}
+

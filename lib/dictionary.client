@@ -1,0 +1,875 @@
+#
+# All purpose terms.
+#
+
+en: yes
+de: ja
+fi: kyllä
+
+en: no
+de: nein
+fi: ei
+
+#
+# Client boot messages.
+#
+
+en: Selecting language: %s
+de: Sprache: %s
+fi: Valitaan kieli: %s
+
+en: Creating %s
+de: Zusammenstellung von %s
+fi: Luodaan %s
+
+en: Security manager: allow read file: %s
+de: Sicherheit: lese %s
+fi: Tietoturva: sallitaan luku: %s
+
+en: Security manager: allow write file: %s
+de: Sicherheit: schreibe %s
+fi: Tietoturva: sallitaan kirjoitus: %s
+
+en: Security manager: allow execute: %s
+de: Sicherheit: ausführen von %s
+fi: Tietoturva: sallitaan ajo-oikeudet: %s
+
+en: Security manager: allow open dir: %s
+de: Sicherheit: öffne Verzeichnis %s
+fi: Tietoturva: sallitaan hakemiston listaus: %s
+
+en: Security manager: allow connect: %s
+de: Sicherheit: Verbindung %s aufbauen
+fi: Tietoturva: sallitaan yhteydenotot: %s
+
+en: Loading %s
+de: Lade %s
+fi: Ladataan %s
+
+en: Initializing graphics driver: resolution %s
+de: Initialisiere Grafiktreiber: Auflösung %s
+fi: Alustetaan näyttöajuri: resoluutio %s
+
+en: Graphics initialized: physical resolution %s
+de: Grafik initialisiert: physikalische Auflösung %s
+fi: Näyttö alustettu: fyysinen resoluutio %s
+
+en: Calling %s
+de: Aufruf von %s
+fi: Kutsutaan %s
+
+#
+# Command /addproduct
+#
+
+en: add product
+de: Produkt hinzufügen
+fi: lisää tuote
+es: que pasa?
+
+en: This command adds one product for sale. The ordering code of the product is '{yellow}id{white} {yellow}t{white}', where {yellow}id{white} is the abbreviation of the card set and {yellow}t{white} is the type of the product ('booster', 'starter', etc.). The ordering code is a string which describes the product for the factory server. Number of the sale items available is {yellow}n{white} and the price of them is {yellow}prc{white} apiece.
+
+#
+# Command /away
+#
+
+en: toggle away status
+de: Away-Status (Verfügbar/Nicht verfügbar) ändern
+fi: läsnäolo/poissaolo
+
+en: Marks you as away from the keyboard with the given text as an explantion. Without any arguments, removes away status.
+de: Spieler, welche kurzzeitig nicht verfügbar sind (da sie nicht vor dem PC sitzen etc.) können dies hiermit kenntlich machen.
+
+#
+# Command /ban
+#
+
+en: ban a player
+de: Spieler bannen
+fi: estä pääsy
+
+en: Without any arguments, this command lists all banned users. Adding one or more player nicks as arguments, this commands adds them to the ban list. When a player is banned, he cannot login in to the game anymore. Additionally, if the banned player is online when this command is issued, he is kicked automatically from the server. See also {orange}/help restrict{white} and {orange}/help unban{white}.
+
+#
+# Command /bans
+#
+
+en: list bans
+de: gebannte Nutzer auflisten
+fi: luettele estot
+
+en: This command lists all banned users and restricted domains.
+de: Dieses Kommando listet alle gebannten Benutzer und Domains auf.
+
+#
+# Command /bid
+#
+
+en: place a bid
+de: Gebot platzieren
+fi: aseta panos
+
+en: Simple auction system works as follows: each player places their bids using this command. The bid can be any text. When each player has placed their bids, the auction results are displayed and book-keeping for bidding is reseted to be ready for next bidding.
+de: Arbeitsweise des Bietsystems: Jeder Spieler bietet Korruptionspunkte von Frodo (je mehr der Spieler bietet, mit desto mehr Korruption beginnt Frodo), der Spieler mit dem höchsten Gebot beginnt das Spiel.
+
+#
+# Command /bind
+#
+
+en: create macro and bind to key
+de: Makro erstellen und mit einer Tastenkombination mit Automatik verbinden
+fi: luo rivimakro
+
+en: Without any arguments, show a listing of all bindings. Otherwise, wait for a key press. After that, bind the given {yellow}text{white} to the key pressed. When the key with a binding is pressed, current input line is stored temporarily, the bound text is then put to the input line and return-key is pressed automatically. After that the content of the old input line is restored. See also {orange}/help bindk{white}.
+de: {yellow}Achtung!{white} Tastaturkombinationen werden OHNE Nachfrage überschrieben! Ohne Argument werden alle Tastenkombinationen aufgelistet. Wurde ein Argument angehängt, wartet GCCG auf eine Tastenkombination, welche den {yellow}Text/Befehl{white} dementsprechend an die Tastenkombination bindet. Wenn nun die Tastenkombination gedrückt wird, wird der Befehl oder Text automatisch ausgeführt (inkl. Eingabetaste). Siehe auch: {orange}/help bindk{white}
+
+#
+# Command /bindk
+#
+
+en: bind key stroke to key
+de: Tastenkombination ohne Automatik festlegen
+fi: luo näppäinmakro
+
+en: Without any arguments, show a listing of all key stroke bindings. Otherwise, wait for a key press. After that, bind the given {yellow}text{white} to the key pressed. When the key with a binding is pressed, the bound text is appended to the input line as single key press. See also {orange}/help bind{white}.
+de: {yellow}Achtung!{white} Tastaturkombinationen werden OHNE Nachfrage überschrieben! Ohne Argument werden alle derzeitigen Tastaturkombinationen aufgelistet. Mit Argument kann eine neue Tastaturkombination erstellt werden, mit dem als Argument übergebenen {yellow}Text{white}. Der Unterschied zu /bind liegt darin, das dieser Text nicht automatisch abgesendet wird, sonder vorher nach der Eingabetaste verlangt (und somit bearbeitet werden kann). Siehe auch: {orange}/help bind{white}
+
+#
+# Command /buy
+#
+
+en: buy one or more boosters
+de: Booster Pack oder Starter Deck kaufen
+fi: osta tuotteita
+
+en: This command buys one or more products, which can be listed using {yellow}/products{white} command. An optional argument {yellow}n{white} determines the number of products to buy. Default is one. A product can be given as an abbreviation instead of the full set name. The set name may be followed by an optional product type specifier, which defaults to 'booster' if not given. The product names are also case insensitive.
+de: mit /buy kauft man ein oder mehrere Produkte. Diese können aufgelistet werden, indem man den Befehl: {yellow}/products{white} verwendet. Optional kann man das Argument {yellow}n{white} übergeben, welches festlegt, wieviele Exemplare gekauft werden. Viele Produkte haben auch Abkürzungen. Der Set-Name kann mit einem Produkt-Typ verbunden werden (einfach anhängen), ansonsten werden Booster Packs gekauft. Groß- und Kleinschrift sind wichtig.
+
+#
+# Command /copydeck
+#
+
+en: copy deck to new name
+de: Deck mit einem neuen Namen kopieren
+fi: kopioi pakka eri nimelle
+
+en: Make an exact copy of the current deck if selected and name it to {yellow}name{white}. Selects the copy as the current deck. If there are no deck selected, this command does nothing.
+de: Eine 1:1 Kopie des aktuellen Decks mit neuem {yellow}name{white} erstellen. Es wird automatisch das kopierte Deck als aktuelles Deck genutzt. Wenn noch kein Deck gewählt wurde, wird der Befehl ignoriert.
+
+#
+# Command /default
+#
+
+en: set default price by rarity
+de: Standardpreise für Karten bestimmen
+fi: aseta oletushinta
+
+en: When selling a card first time without any competing offer, the price of the card is set to the default value. Each rarity has it's own default price, which is set when you sell the first card having the rarity in question. At that time you set the initial default value using number pad and enter. After that you can set the price {yellow}p{white} as default for rarity {yellow}r{white} using this command. Without arguments, this command lists current default prices by rarity.
+de: Einen Standardpreis für eine Raritäten-Kategorie einstellen (für alle R1-Karten den gleichen Preis, für alle Commons den gleichen Preis, etc.)
+
+#
+# Command /delgame
+#
+
+en: delete your saved game
+de: Gespeichertes Spiel löschen
+fi: tuhoa tallennettu peli
+
+en: Remove a saved game for the current group of players. This command should be applied to save disk space on a server, when the saved game is not needed anymore.
+de: Mit /delgame wird eine Spiel-Partie vom Server gelöscht, wenn diese nicht mehr für die Spieler benötigt wird. Dies ist hilfreich um etwas Plattenplatz zu schaffen.
+
+#
+# Command /delproduct
+#
+
+en: delete product
+de: Produkt löschen
+fi: poista tuote
+
+en: This command removes one product. The ordering code {yellow}id t{white} is the same as in {yellow}/addproduct{white}.
+de: Mit /delproduct wird ein Produkt gelöscht. Weitere Informationen unter {yellow}/addproduct{white}.
+
+#
+# Command /display
+#
+
+en: name current display
+de: Aktuelle Ansicht benennen und speichern
+fi: nimeä näkymä
+
+en: When you have filtered and sorted your own custom display, you can save it for later use with this command. The name of the custom display appears at the end of the display selection list. If you want to destroy this display later, you can choose "Destroy this display" from the collection menu while the display is selected. See also {orange}/help select{white} and {orange}/help sort{white}.
+de: Wenn ein eigener Filter und Sortiermechanismus für die Karten gewählt wurde, kann dieser unter einem selbst gegebenen Namen gespeichert werden, um diese jederzeit nutzen zu können. Dieser kann über die Auswahl der Ansichten gewählt werden. Gelöscht wird die Ansicht, indem sie aktiviert und dann mit dem Eintrag "Destroy this display" gelöscht wird. Siehe auch: {orange}/help select{white} und {orange}/help sort{white}.
+
+#
+# Command /draw
+#
+
+en: declare draw
+de: Spiel als Unentschieden deklarieren
+fi: julista tasapeli
+
+en: Declare the result of the game to be a draw. If someone has already declared the result, new declaration overrides it. Optional arguments {yellow}options{white} are game specific.
+de: Das Spiel wird als Unentschieden deklariert. Wurde zuvor ein anderer Ausgang des Spiel gewählt, ist dieser alte Ausgang hinfällig. Die weiteren {yellow}options{white} Argumente sind Spiel spezifisch.
+
+#
+# Command /eval
+#
+
+en: evaluate an expression
+de: expression auswerten
+fi: suorita lauseke
+
+en: This command takes an expression {yellow}exp{white} and evaluates it using gccg-script engine. The resulting value of the expression is stored to the variable {yellow}E{white}. Expression can contain more than one statements separated by semicolon. The last semicolon should be omitted.
+de: Durch /eval wird eine {yellow}exp{white} von der gccg-script engine ausgewertet. Die Werte werden in die Variable {yellow}E{white} gespeichert. Getrennt werden die Werte durch ein Semikolon.
+
+#
+# Command /faq
+#
+
+en: add FAQ entries
+de: FAQ-Eintrag hinzufügen
+fi: lisää FAQ ehdotus
+
+en: This command displays an {yellow}entry{white} using {cyan}cyan{white} text and adds a line to the FAQ proposals. All proposals are examined manually and added to the FAQ if they are useful. Please add questions starting with {green}Q:{white} and answers starting with {green}A:{white}. Without arguments, show current proposals for the FAQ.
+de: Hierdurch wird die Frage in den Raum gestellt (für alle im Chat sichtbar), und gleichzeitig an die FAQ (Fragen und Antworten-List) zur Beantwortung und Überprüfung zur Aufnahme gesandt.
+
+#
+# Command /find
+#
+
+en: seach for a card
+de: nach einer bestimmten Karte suchen
+fi: etsi kortti
+
+en: Find a card having a name {yellow}card_name{white}. If exact name was not found, then search for cards with the name containing a text {yellow}card_name{white}. If found either way, show the collection if not already visible. Then turn to page containing the card found. If already in such page, search for the next page containing the card qualifying the search criteria.
+de: Findet die Karte mit dem übergebenen {yellow}Kartennamen{white}. Hier sind auch Teilnamen möglich, falls die genaue Suche nicht zum Erfolg führte.
+
+#
+# Command /give
+#
+
+en: give money
+de: Geld übertragen
+fi: anna rahaa
+
+en: Give an {yellow}amount{white} of money to the other {yellow}player{white}. The other player must be online and the amount must be greater than zero.
+de: Einem bestimmten {yellow}Spieler{white} einen bestimmten {yellow}Geldbetrag überweisen{white}. Der Betrag muss positiv und beide Spieler online sein.
+fi: Anna toiselle pelaajalle {yellow}player{white} rahaa määrän {yellow}amount{white} verran. Toisen pelaajan tulee olla läsnä ja määrän tulee olla nollaa suurempi.
+
+#
+# Command /go
+#
+
+en: sit down
+de: an einem Tisch platznehmen
+fi: istu alas
+
+en: This command allows you to sit down to the {yellow}table{white} given as a table number. You can check available tables using {yellow}/tables{white} command.
+de: Dieser Befehl setzt den Spieler an einen Tisch, welcher durch die {yellow}table{white} bestimmt wird. Verfügbare Tische können mit {yellow}/tables{white} abgefragt werden.
+
+#
+# Command /grant
+#
+
+en: copy password
+de: Passwort einem anderen Spieler geben
+fi: siirrä salasana
+
+en: If the {yellow}player2{white} is online, copy the password of {yellow}player1{white} to the {yellow}player2{white}. Every player can grant his or her password to anybody, but only God can grant others' passwords. After the password is copied, the {yellow}player2{white} who received the password, can log in as {yellow}player1{white}.
+de: Mit diesem Befehl ist es möglich, sein eigenes Passwort einem anderen Spieler zu geben. Somit ist es z.Bsp. Spieler 1 möglich, sich als Spieler 2 einzuloggen (wenn Spieler 2, Spieler 1 das Passwort übergeben hat).
+
+#
+# Command /have
+#
+
+en: show player's have list
+de: Kartenliste eines Spielers vergleichen
+fi: näytä have-lista
+
+en: Asks the meta server for the have list of the given {yellow}player{white}. The have list contains all cards which you have marked as wanted and which are put for sale by the {yellow}player{white}.
+de: Bei einem Spieler nach einer gesuchten Karte suchen. Gezeigt werden die Karten nur, wenn der Spieler diese auch zum Verkauf anbietet.
+
+#
+# Command /help
+#
+
+en: show help on topic
+de: Hilfe und Informationen (auch über Karten) anzeigen
+fi: opasteet aiheesta
+
+en: Show information about the given {yellow}topic{white}. If there are no such topic, then all card names are checked against and if a match is found, then the card data of the mathed card is shown. Without arguments, show the list of available topics.
+de: Informationen über Kommandos und Karten anzeigen. Dies ist eine Möglichkeit den Text mit allen Verfügbaren Informationen über eine Karte anzeigen zu lassen.
+
+#
+# Command /inplay
+#
+
+en: list cards on table
+de: Auflistung aller Karten auf dem Tisch
+fi: luettele kortit pelissä
+
+en: List all cards on table sorted by the owner of the card.
+de: Auflisten der Karten, sortiert nach Besitzer, auf einem Spieltisch.
+
+#
+# Command /join
+#
+
+en: toggle play/watch status
+de: Wechseln zwischen spielen und zuschauen
+fi: pelaa/katso
+
+en: Toggle your play/watch status. If you are sitting on table without the ongoing game, you will join to the game. If the number of players is sufficient, the game begins. If you join to the game that has already started, you will watch the game. This command also cancels 'ready to play' status, if already joined, but the game has not yet started.
+de: Dieser Befehl ermöglicht das Zuschauen bei eine laufenden Spiel, und das Beginnen eines neuen Spiels. Erst wenn genügend Mitspieler am Tisch sitzen, beginnt das Spiel. Bereits laufende Spiele können nur beobachtet werden, ein nachträgliches Beitreten zum Spielen ist nicht möglich.
+
+#
+# Command /kick
+#
+
+en: disconnect player
+de: Spieler vom Server werfen
+fi: häädä pelaaja
+
+en: This command forces disconnection for {yellow}player{white}.
+de: Mit diesem Kommando wird die Verbindung zum angegebenen {yellow}Spieler{white} unterbrochen.
+
+#
+# Command /kicktable
+#
+
+en: disconnect table
+de: Tisch vom Server werfen
+fi: poista pelipöytä
+
+en: This command forces disconnection for table {yellow}tblnum{white}.
+de: Über diesen Befehl wird der Tisch {yellow}tblnum{white} aus GCCG entfernt.
+
+#
+# Command /legal
+#
+
+en: ask detailed legality of the deck
+de: Deck auf Fehler überprüfen
+fi: varmista pakan säännönmukaisuus
+
+en: This command asks the game server to report more detailed information on the legality of the current play deck. The deck is checked against all game formats defined and the report of violations against each format is generated.
+de: Durch dieses Kommando wird ein Deck überprüft, dabei werden weitere Informationen ausgegeben, wenn ein Deck nicht den Regeln entspricht. Das Deck wird auf alle definierten Formate überprüft.
+
+#
+# Command /loadgame
+#
+
+en: restore your game
+de: Spiel laden
+fi: palauta pelitilanne
+
+en: Searches if there is a saved game for current player(s) and restores it, if found. Note that you must be playing at the same server, where you saved your game - not necessarily at the same table. The game server announces at the beginning of the game, if there is a saved game available for your play group. Restoring the saved game does not remove it from the server; see also {orange}/help delgame{white}.
+de: Auf dem Server wird nach einem Spiel des Spielers (der Spieler) gesucht, und wenn möglich geladen. Spiele können nur auf dem Server geladen werden, wo sie auch gespeichert wurden (der Tisch muß nicht identisch sein). Das Spiel startet von vorne. Durch das Laden und Beenden eines Spieles wird dieses nicht automtatisch gelöscht. Siehe auch: {orange}/help delgame{white}
+
+#
+# Command /loadimages
+#
+
+en: load all card images
+de: Alle Karten-Bilder laden
+fi: hae kuvat muistiin
+
+en: Normally all card images are loaded or generated on demand. This may cause unwanted delays when turning pages of the collection. This command loads all images at once.
+de: Standardmäßig werden Karten geladen, wenn diese gebraucht werden. Dies kann zu Verzögerungen führen, daher ist es möglich mit /loadimages alle Karten auf einmal zu laden.
+
+#
+# Command /me
+#
+
+en: emote
+de: Emotionen
+fi: eläydy
+
+en: Send an emote string to the server, which replies it as an action made by you.
+de: Wie bei vielen IRCs, wird auch bei GCCG durch /me eine Emotion eines Spielers beschrieben, indem der Spielername als Startwort des Satzes genutzt wird.
+
+#
+# Command /newdeck
+#
+
+en: create new deck
+de: Ein neues Deck erstellen
+fi: luo uusi pakka
+
+en: Create an empty deck with the given {yellow}deckname{white} and select it as the current deck. Opens up the deck editing list automatically. The deck is saved automatically after the editing list is closed
+de: Ein neues Deck mit dem folgenden {yellow}Decknamen{white} erstellen. Hierdurch wird der Deckeditor automatisch gestartet. Durch schließen des Deck-Editors wird das neue Deck automatisch gespeichert.
+
+#
+# Command /ok
+#
+
+en: accept result
+de: Spielresultat bestätigen
+fi: hyväksy tulos
+
+en: Give your acceptance to the declared result. After all players have accepted the declared result, the game ends and meta server will update all game depended statistics accordingly.
+de: Durch /ok wird der Ausgang eines Spieles bestätigt. Nachdem alle Mitspieler den Ausgang bestätigt haben, wird das Spiel beendet und die Spielerstatistik aktualisiert.
+
+#
+# Command /payall
+#
+
+en: give money to everybody
+de: An Jeden Geld auszahlen
+fi: jaa kaikille rahaa
+
+en: Add the given {yellow}amount{white} of money to every player.
+de: Jedem Spieler den folgenden {yellow}Betrag{white} auszahlen.
+
+#
+# Command /products
+#
+
+en: show products available
+de: Verfügbare Produkte auflisten
+fi: luettele tuotteet
+
+en: List the quantity and the price of each product for sale.
+de: Die vollständige Produktpalette mit Verfügbarkeit und Preis auflisten.
+
+#
+# Command /quit
+#
+
+en: leave
+de: Verlassen oder beenden
+fi: poistu
+
+en: If you are watching or playing, leave the game and return to the chat mode. Otherwise, save decks and other client-side data and close the server connection. After that, quit.
+de: Der Befehl schließt ein bestestehendes Spiel und kehrt zum Chat-Modus zurück. Befindet man sich bereits im Chat-Modus, werden alle Daten gespeichert und das Programm beendet.
+
+#
+# Command /rd
+#
+
+en: register your tournament deck
+de: Tournament-Deck registrieren
+fi: rekisteröi turnauspakkasi
+
+en: Send the content of the current deck to the meta server for registration. The meta server stores a copy of the deck. After you have registered your deck, game servers check your game decks against the registered deck. Then reports are generated wether the game deck is identical to the registered deck and/or wether the combined parts of the game deck contains the same cards as the registered one. NOTE: The game servers do not report anything if the deck is not registered. So, it is up to the player to observe that an opponent haven't change his deck during tournament event. See also {orange}/help ro{white}.
+de: Eine Kopie des aktiven Decks wird an den Server zur Registration gesendet. Hierdurch werden die Decks der Spieler verglichen und das Ergebnis dazu angezeigt.
+
+#
+# Command /reboot
+#
+
+en: reboot the server
+de: Neustart des Servers
+fi: käynnistä palvelin
+
+en: Send Quit-message to all players and game servers. After that, reboot the meta server.
+de: Allen Spielern und Servern werden eine Nachricht gesandt, danach wird der Server geschlossen. Nachdem dies geschehen ist, wird der Meta-Server neu gestartet.
+
+#
+# Command /register
+#
+
+en: register complete set
+de: Komplette Sets registrieren
+fi: rekisteröi korttisetti
+
+en: If the player has collected all cards of the {yellow}set{white}, he or she is awarded by a bonus. The bonus is $0.1 per individual card in the set. If the player has not yet collected all cards, the number of missing cards is announced. The {yellow}set{white} must be given as an abbreviation of the card set (case insensitive). If the abbreviation is not valid, the list of valid abbreviations are shown.
+de: Wenn der Spieler ein komplettes Kartenset besitzt, kann er dieses registrieren und dadurch einen Bonus erhalten. Der Bonus beträgt pro unterschiedlicher Karte 0,1$. Sollte das Deck nicht vollständig sein, wird die Anzahl der fehlenden Karten ausgegeben. Das {yellow}Set{white} muss als Abkürzung des Kartensets gesendet werden (Groß-/Kleinschreibung beachten). Unbekannte Abkürzungen werden ignoriert und eine Liste aller verfügbaren Abkürzungen wird angezeigt.
+
+#
+# Command /removeuser
+#
+
+en: delete user
+de: Spieler löschen
+fi: poista käyttäjätiedot
+
+en: This command deletes all data of {yellow}player{white}.
+de: Alle Daten des {yellow}Spielers{white} werden glöscht.
+
+#
+# Command /renamedeck
+#
+
+en: rename deck
+de: Deck umbenennen
+fi: nimeä pakka uudelleen
+
+en: Give new {yellow}name{white} to the current deck if selected. If there are no deck selected, this command does nothing.
+de: Dem derzeitigen Deck einen neuen {yellow}Namen{white} geben.
+
+#
+# Command /reproduce
+#
+
+en: add products
+de: Produkte hinzufügen
+fi: lisää tuotteita
+
+en: Check all products. If there is a sold out product, then add a shipment of product with halved availability (compared to the previous shipment) and price increased by 10%.
+de: Alle Produkte werden überprüft und Ausverkaufte nachbestellt. Den nachbestellten Produkten werden 10% aufgerechnet.
+
+#
+# Command /restrict
+#
+
+en: restric access
+de: Zugriffe einschränken
+fi: rajoita pääsy
+
+en: Without any arguments, this command lists all restrictions currently in effect. Domain name can be exact or it can contain * as a joker character, for example *.cheaters.com. When the restriction is added to the domain, all existing players can connect but new players are not accepted any more. They get a message explaining the situation and how to get an account by email from the server administrator. See also {orange}/help ban{white} and {orange}/help unrestrict{white}.
+de: Ohne Übergabewerte, werden alle aktiven Einschränkungen aufgelistet. Der Domainname kann auch mit Platzhaltern (*) eingegeben werden (Beispiel: *.cheaters.com). Nach setzten der Einschränkung können keine neuen Spieler mehr beitreten, stattdessen erhalten diese einen Hinweis, wie sie Zugriff durch E-Mail erhalten. Siehe auch: {orange}/help ban{white} und {orange}/help unrestrict{white}
+
+#
+# Command /ro
+#
+
+en: restore original deck
+de: Original-Deck wieder herstellen
+fi: palauta alkuperäinen pakka
+
+en: You can retrieve the original composiotion of the registered deck with this command. Be careful when using this command, since it overwrites your current deck with the content of the registered deck. See also {orange}/help rd{white}.
+de: ACHTUNG! Durch die Nutzung von /ro wird die Original-Zusammenstellung eines registrierten Decks wieder hergestellt, das aktuelle Deck geht somit verloren. Siehe auch: {orange}/help rd{white}.
+
+#
+# Command /rtfm
+#
+
+en: give some info
+de: Anzeigen der FAQs
+fi: anna vihje
+
+en: Display {green}http://gccg.sf.net/faq.php{white} for newbies.
+de: Hierdurch wird die FAQ ({green}http://gccg.sf.net/faq.php{white}) angezeigt. Hilfreich für Anfänger.
+
+#
+# Command /save
+#
+
+en: save data
+de: Daten speichern
+fi: tallenna palvelimen tiedot
+
+en: This command saves all client-side data to the directory ~/.gccg/Game/. It also sends an advise to the server to save all important data.
+de: Alle Clientseitigen (Spieler) Daten werden im Verzeichnis ~/.gccg/Game/ abgelegt. Hierdurch werden auch alle relevanten Daten des Servers gespeichert.
+
+#
+# Command /savegame
+#
+
+en: save your game
+de: Spiel speichern
+fi: tallenna pelitilanne
+
+en: Saves your current game status to the disk in the game server. Each player, player pair, player triple, etc. have one personal save file, which is overwritten each time using this command. Saving the game does not end it, but you can declare undecided result and continue later using {yellow}/loadgame{white}. This command is automatically applied when one of the players' network connection dies. See also {orange}/help delgame{white}.
+de: Die aktuellen Daten des Spiel werden auf dem Server gespeichert. Jedes Spiel hat seine eigene Datei, welche durch Nutzung des Kommandos überschrieben wird. Durch das Speichern des Spiels, wird dieses nicht beendet. Bei Abbruch der Verbindung eines Spielers, werden Spiele automatisch gesichert. Siehe auch: {orange}/help delgame{white}.
+
+#
+# Command /sealed
+#
+
+en: play sealed deck
+de: Sealed-Deck Spiele
+fi: pelaa sealed deck
+
+en: The sealed deck game is based on alter egos of players. To initiate an sealed deck event, you must first transfer an amount of money to the sealed deck alter ego of your player character. This is accomplished by the command {yellow}/sealed <n>{white}, where {yellow}<n>{white} is the amount of money to start with. Tha cards and money already owned by the sealed deck alter ego, is not lost. The money is added to instead. The command also switches to the sealed deck character immediately. If you want to switch between your normal character and the sealed deck character, you can say {yellow}/sealed{white} without any arguments. To transfer all cards and money back to your main character, say {yellow}/sealed end{white}.
+de: Bevor ein neues Sealed-Deck Spiel begonnen werden kann, muß jeder Spiele einen bestimmten Betrag (wird zwischen den Spielern ausgehandelt) übertragen werden ({yellow}/sealed <n>{white} überträgt den Startbetrag - n=Geldbetrag). Durch die Nutzung der Sealed Decks werden die Kartensets und weiteren Daten der Spieler nicht beeinflusst. Nach dem Transfer des Betrages, wird automatisch das Sealed-Deck begonnen. Ein Wechseln zwischen sealed und normalen Daten ist durch die Eingabe von {yellow}/sealed{white} (ohne Argumente) möglich. Karten und Geld, werden durch {yellow}/sealed end{white} zum normalen Spieler übertragen.
+
+#
+# Command /select
+#
+
+en: select cards to display
+de: Wähle Karten zur Anzeige
+fi: valitse näkymä
+
+en: {yellow}<n>{white} - an integer
+de: {yellow}<n>{white} - Zahl (Integer)
+fi: {yellow}<n>{white} - kokonaisluku
+
+en: {green}"{yellow}<str>{green}"{white} - a string
+de: {green}"{yellow}<str>{green}"{white} - Zeichenfolge (String)
+fi: {green}"{yellow}<str>{green}"{white} - merkkijono
+
+en: {green}name{white} - a card name
+de: {green}name{white} - Kartenname
+fi: {green}name{white} - kortin nimi
+
+en: {green}set{white} - an abbrivation of the set
+de: {green}set{white} - Die Abkürzung des Sets
+fi: {green}set{white} - setin lyhenne
+
+en: {green}text{white} - card text
+de: {green}text{white} - Kartentext
+fi: {green}text{white} - korttitekstit
+
+en: {green}have{white} - number of cards you own
+de: {green}have{white} - Anzahl der eigenen Karten
+fi: {green}have{white} - omistamiesi korttien määrä
+
+en: {green}want{white} - number of cards you want
+de: {green}want{white} - Anzahl der gesuchten Karten
+fi: {green}want{white} - haluamiesi korttien määrä
+
+en: {green}sell{white} - number of cards you have for sale
+de: {green}sell{white} - Anzahl der verkauften Karten
+fi: {green}sell{white} - myynnissä olevien korttiesi määrä
+
+en: {green}deck{white} - number of cards in the current deck
+de: {green}deck{white} - Anzahl der Karten des aktiven Decks
+fi: {green}deck{white} - korttien määrä valitussa pakassa
+
+en: {green}seller{white} - name of the seller
+de: {green}seller{white} - Name des Verkäufers
+fi: {green}seller{white} - myyjän nimi
+
+en: {green}price{white} - price of the card
+de: {green}price{white} - Kartenpreis
+fi: {green}price{white} - kortin hinta
+
+en: {green}myprice{white} - price of the card set by me
+de: {green}myprice{white} - Kartenpreis für meine Karten (selbst festgesetzt zum Verkauf)
+fi: {green}myprice{white} - asettamani myyntihinta
+
+en: You can refine your collection view by applying subsequent selects. Each select expression checks every card from the current display and drops those cards not matching the filter expression {yellow}exp{white}. The filter expression is one of the following:
+de: Die Auswahl kann durch weitere Einschränkungen verfeinert werden, da nicht zutreffende Karten aus der Ansicht entfernt werden. Beispiel:
+
+en: {yellow}<e1>{green} rel {yellow}<e2>{white} - comparison where {green}rel{white} is {yellow}={white}, {yellow}>{white}, {yellow}<{white}, {yellow}!={white}, {yellow}<={white} or {yellow}>={white}
+
+en: {yellow}<e1>{green} op {yellow}<e2>{white} - mathematical expression where {green}op{white} is {yellow}+{white}, {yellow}-{white}, {yellow}*{white}, or {yellow}/{white}
+
+en: {green}({yellow}e{green}){white} - parenthesis alters precedence
+
+en: {yellow}<e1>{green} has {yellow}<e2>{white} - true if {yellow}e2{white} is a substring of {yellow}e1{white} (comparison case independent)
+
+en: {green}not {yellow}<e>{white} - negate expression {yellow}e{white}
+
+en: {yellow}<e1>{green} and {yellow}<e2>{white} - true if both expressions are true
+
+en: {yellow}<e1>{green} or {yellow}<e2>{white} - true if either expressions is true
+
+en: {yellow}<attr>{white} - {green}adjacent{white}, {green}agent{white}, {green}auto_attack{white}, {green}body{white}, {green}class{white}, {green}corruption{white}, {green}draw{white}, {green}draw_opp{white}, {green}gi{white}, {green}haven{white}, {green}haven1{white}, {green}haven2{white}, {green}home_site{white}, {green}influence{white}, {green}magic{white}, {green}mind{white}, {green}move_to{white}, {green}mp{white}, {green}playable{white}, {green}prowess{white}, {green}race{white}, {green}rarity{white}, {green}region{white}, {green}region_type{white}, {green}site_path{white}, {green}site_type{white}, {green}skills{white}, {green}sp{white}, {green}spawn{white}, {green}special{white}, {green}specific{white}, {green}strikes{white}, {green}subclass{white}, {green}type{white} or {green}unique
+
+en: See also {orange}/help display{white} and {orange}/help sort{white}.
+
+#
+# Command /set
+#
+
+en: change settings
+de: Einstellungen ändern
+fi: muuta asetuksia
+
+en: Without arguments, this command lists all options currenlty set. Otherwise it can be used to fine tune operating parameters of the client or the server. All settings are offered to the server. If the server accepts the setting, i.e. the given variable {yellow}var{white} is meaningful to the server, then the server side option is set to {yellow}value{white}. In any case, client-side option is set to the {yellow}value{white}. The list of client-side options follows:
+de: Ohne Übergabewerte, werden alle Einstellungen aufgelistet. Hiermit kann das GCCG weiter auf eigene Bedürfnisse angepasst werden. Einige Beispiele:
+
+en: {green}nosound {yellow}<s>{white} - if set to 'yes', play no sound when game begins
+de: {green}nosound {yellow}<s>{white} - 'yes' schaltet den Sound ab
+
+en: {green}trade_limit {yellow}<n>{white} - if you own more than {yellow}n{white} copies of the given card, consider these extra cards as tradeable (default 4)
+de: {green}trade_limit {yellow}<n>{white} - Ab einer bestimmten Anzahl ({yellow}<n>{white}) werden die Restkarten zum Verkauf angeboten (Standard 4)
+
+en: {green}price {yellow}'higher'/'lower'/'same'/'default'{white} - when selling first card or pressing enter, choose price according to this setting (default 'higher')
+
+en: The list of server-side options:
+de: Serverseitige Optionen (welche für jeden Spieler von GCCG sichtbar sind):
+
+en: {green}avatar {yellow}<image>{white} - choose an image presenting you (see graphics/avatar)
+de: {green}avatar {yellow}<image>{white} - für seinen eigenen Charakter ein Bild wählen (siehe graphics/avatar)
+
+en: {green}  email {yellow}<s>{white} - set your email address shown by /whois command to {yellow}s{white}
+de: {green}  email {yellow}<s>{white} - eigene E-Mail-Adresse an den Server übertragen
+
+en: {green}plan {yellow}<s>{white} - set additional information shown by /whois command to {yellow}s{white}
+de: {green}plan {yellow}<s>{white} - Eigene (weitere) Informationen an den Server übertragen
+
+en: {green}realname {yellow}<s>{white} - set your real name shown by /whois command to {yellow}s{white}
+de: {green}realname {yellow}<s>{white} - Seinen Real-Namen (echten Namen) dem Server mitteilen
+
+#
+# Command /su
+#
+
+en: change user
+de: Benutzer (Benutzernamen) wechseln
+fi: vaihda käyttäjää
+
+en: This command closes current session and begins new one with a player account {yellow}user{white}. You must have already registered the account.
+de: Aktive Sitzung beenden und eine neue mit {yellow}user{white} beginnen. Dieser gewählte Zugang muß bereits registriert sein.
+
+#
+# Command /tables
+#
+
+en: show table info
+de: Tisch-Informationen anzeigen
+fi: näytä pöytien tiedot
+
+en: Show a list of game servers available. The list contains IP-addresses, ports and game parameters (number of players, bet) of each game server.
+de: Auflisten aller Spielserver, inklusive IP-Adressen, Ports und Spielparameter (Spieleranzahl, Gebote...).
+
+#
+# Command /time
+#
+
+en: add a timer
+de: Stopuhr benutzen
+fi: käynnistä ajastin
+
+en: Adds a timer for calling time limits in a tournament. When this command is issued, the Judge yells '{yellow}time{white} minutes until {yellow}message{white}'. Then it announces half time (if the limit is more than 19 minutes) and 5 minutes before the limit (if the limit is more than 5 minutes). Finally the end of the time limit is called.
+de: Eine Stopuhr für Meisterschaften hinzufügen.
+
+#
+# Command /unban
+#
+
+en: unban a player
+de: Bannen eines Spieler zurücksetzen
+
+en: Remove a player from the ban list. See also {orange}/help ban{white}.
+de: Einen Spieler aus der Bann-Liste entfernen. Siehe auch {orange}/help ban{white}.
+
+#
+# Command /unbind
+#
+
+en: remove macro binding
+de: Tastaturkombinationen löschen
+fi: poista makro
+
+en: Waits for a key press. If the key pressed has a binding (see. /bind), remove the binding.
+de: Wartet auf einen Tastendruck, danach wird dieser Tastendruck entfernt (die Funktion dieser Tastenkombination). Siehe auch {orange}/help ban{white}.
+
+#
+# Command /undecided
+#
+
+en: declare undefined result
+de: Spiel abbrechen
+fi: julista ratkaisematon
+
+en: Declare that the game is not played to the final result. If someone has already declared the result, new declaration overrides it.
+de: Hiermit wird ein Spiel ohne Ergebnis abgebrochen.
+
+#
+# Command /unrestrict
+#
+
+en: remove restriction
+de: Einschränkungen aufheben
+fi: poista pääsyrajoitus
+
+en: Remove a domain from the restriction list. See also {orange}/help restrict{white}.
+de: Entfernen einer Domain von der Einschränkungs-Liste. Siehe auch: {orange}/help restrict{white}.
+
+#
+# Command /unset
+#
+
+en: nullify settings
+de: Einstellungen löschen
+fi: tyhjennä asetus
+
+en: This command removes the current setting of {yellow}var{white}.
+de: Die Einstellung von {yellow}var{white} wird gelöscht.
+
+#
+# Command /users
+#
+
+en: list of users
+de: Nutzerliste anzeigen
+fi: luettele käyttäjät
+
+en: Show a list of all users. The users online are shown in green.
+de: Alle Benutzer werden angezeigt, wobei Spieler die online sind, grün hervorgehoben werden.
+
+#
+# Command /want
+#
+
+en: show player's want list
+de: Kartensuchliste des Spielers anzeigen
+fi: näytä want-lista
+
+en: Asks the meta server for the want list of the given {yellow}player{white}. The have list contains all cards which he or she have marked as wanted. The cards you have for sale or you have more than {yellow}trade_limit{white}, are shown in green.
+de: Die Liste aller gesuchten Karte des {yellow}Spielers{white} werden angezeigt. Diese Liste zeigt alle Karten die der Spieler sucht.
+
+#
+# Command /who
+#
+
+en: show players online
+de: Anzeige der anwesenden Spieler
+fi: näytä paikallaolijat
+
+en: Show a list of all players and their ip-addresses, who are currently connected to the meta server.
+de: Anzeige aller anwesenden Spieler, inklusive ihrer IP-Adresse.
+
+#
+# Command /whois
+#
+
+en: show player info
+de: Spielerinformation anzeigen
+fi: näytä pelaajan tiedot
+
+en: Ask the meta server to describe a {yellow}player{white}. The personal data (realname, email, plan) set by the player is shown as well as his/her wealth and game play history.
+de: Alle verfügbaren {yellow}Spieler{white}-Informationen werden angezeigt, inklusive Realname, E-Mail und weiterer persönlicher Daten.
+
+#
+# Command /win
+#
+
+en: declare win
+de: Spiel als gewonnen bezeichnen
+fi: julista voitto
+
+en: Declare yourself as a winner of the game. If someone has already declared the result, new declaration overrides it. Optional arguments {yellow}options{white} are game specific.
+de: Der Gewinner gibt sich als solcher im Spiel aus. Die Verlierer müssen dies mit /ok bestätigen, damit das Spiel beendet wird. Weitere {yellow}Optionen{white} sind Spielabhängig.
+
+#
+# Command /yell
+#
+
+en: send message to all
+de: Allen Personen eine Nachricht senden
+fi: viestitä kaikille
+
+en: This command echoes a {yellow}message{white} to all players, even those who are currently playing.
+de: Durch diesen Befehl wird die {yellow}Nachricht{white} an alle weitergeleitet, nicht nur zu den aktiven Spielern.
+
+#
+# Help system
+#
+
+en: Synopsis:
+de: Beschreibung:
+fi: Tiivistelmä:
+
+en: Chat mode
+de: Chat-Modus
+fi: Yleistila
+
+en: Play mode
+de: Spiel-Modus
+fi: Pelatessa
+
+en: Any mode
+fi: Koska tahansa
+
+en: {sz%d}{center}Welcome to Gccg/%s
+de: {sz%d}{center}Willkommen bei Gccg/%s
+fi: {sz%d}{center}Tervetuloa peliin Gccg/%s
+
+en: {sz%d}{center}Press {orange}F%e{white} for help or {orange}right click{white} for menu.
+de: {sz%d}{center}{orange}F%e{white} für die Hilfe oder ein {orange}Rechtsklick{white} für das Menü.
+fi: {sz%d}{center}Avustetekstit saat {orange}F%e{white}:llä ja valikon {orange}oikealla painikkeella{white}.
+
+en: {orange}{center}{sz%d}Right click an object for menu!
+de: {orange}{center}{sz%d}Rechtsklick auf ein Objekt für das dazugehörige Menü!
+fi: {orange}{center}{sz%d}Oikealla napilla saat kohteesta valikon!
+
+en: Note: Use {yellow}Page Up{white} and/or {yellow}Page Down{white} keys or mouse wheel to scroll these messages.
+de: Note: Use {yellow}Bild hoch{white} und/oder {yellow}Bild runter{white} um durch die Nachrichten zu scrollen.
+fi: Huom: Näppäimillä {yellow}Page Up{white} ja/tai {yellow}Page Down{white} sekä hiiren rullalla voit kelata näitä viestejä.
