@@ -4,6 +4,8 @@ include $(CLEAR_VARS)
 
 LOCAL_CPP_FEATURES += exceptions
 
+LOCAL_CFLAGS += -DPACKAGE=\"GCCG\" -DSYSTEM=\"droid\" -DCCG_DATADIR=\".\" -DCCG_SAVEDIR=\"./save\"
+
 LOCAL_MODULE := main
 
 SDL_PATH := ../SDL
@@ -32,9 +34,9 @@ LOCAL_SRC_FILES := $(SDL_PATH)/src/main/android/SDL_android_main.c \
 	../../../src/driver.cpp \
 	../../../src/game.cpp \
 	../../../src/interpreter.cpp \
-	../../../src/SDL_rotozoom.cpp \
-	../../../src/sdl_driver.cpp \
-	../../../src/game-sdl-version.cpp
+	../../../src/SDL_rotozoom.c \
+	../../../src/sdl-driver.cpp \
+	../../../src/game-draw.cpp
 
 LOCAL_SHARED_LIBRARIES := SDL2 SDL2_image SDL2_mixer SDL2_net SDL2_ttf
 
