@@ -857,7 +857,7 @@ Command Driver::WaitCommand(int delay)
     // Handle mouse wheel
     if(event.type==SDL_MOUSEWHEEL)
     {
-        if (event.wheel.y < 0)
+        if (event.wheel.y > 0)
         {
             ret.x=event.button.x;
             ret.y=event.button.y;
