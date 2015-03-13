@@ -857,20 +857,12 @@ Command Driver::WaitCommand(int delay)
     // Handle mouse wheel
     if(event.type==SDL_MOUSEWHEEL)
     {
+        SDL_GetMouseState(&ret.x,&ret.y);
         if (event.wheel.y > 0)
-        {
-            ret.x=event.button.x;
-            ret.y=event.button.y;
             ret.command="wheel up";
-            return ret;
-        }
         else
-        {
-            ret.x=event.button.x;
-            ret.y=event.button.y;
             ret.command="wheel down";
-            return ret;
-        }
+        return ret;
     }
 
     // Mouse state 1: dragging
