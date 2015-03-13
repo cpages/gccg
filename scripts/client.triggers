@@ -228,119 +228,119 @@ trigger "key" "" code
     PressKey(key,key.ascii);
 }
 
-trigger "shift key" "left shift" code
+trigger "shift key" "Left Shift" code
 {
   KeyModifierDown("shift");
 }
 
-trigger "shift key" "right shift" as "shift key" "left shift"
+trigger "shift key" "Right Shift" as "shift key" "Left Shift"
 
-trigger "key up" "left shift" code
+trigger "key up" "Left Shift" code
 {
   KeyModifierUp("shift");
 }
 
-trigger "key up" "right shift" as "key up" "left shift"
+trigger "key up" "Right Shift" as "key up" "Left Shift"
 
-trigger "control key" "left ctrl" code
+trigger "control key" "Left Ctrl" code
 {
   KeyModifierDown("ctrl");
 }
 
-trigger "control key" "right ctrl" as "control key" "left ctrl"
+trigger "control key" "Right Ctrl" as "control key" "Left Ctrl"
 
-trigger "key up" "left ctrl" code
+trigger "key up" "Left Ctrl" code
 {
   KeyModifierUp("ctrl");
 }
 
-trigger "key up" "right ctrl" as "key up" "left ctrl"
+trigger "key up" "Right Ctrl" as "key up" "Left Ctrl"
 
-trigger "control key up" "left shift" code
+trigger "control key up" "Left Shift" code
 {
   KeyModifierUp("shift");
 }
 
-trigger "control key up" "right shift" as "control key up" "left shift"
+trigger "control key up" "Right Shift" as "control key up" "Left Shift"
 
-trigger "shift control key" "left shift" code
+trigger "shift control key" "Left Shift" code
 {
   KeyModifierDown("shift");  
 }
 
-trigger "shift control key" "right shift" as "shift control key" "left shift"
+trigger "shift control key" "Right Shift" as "shift control key" "Left Shift"
 
-trigger "shift control key" "left ctrl" code
+trigger "shift control key" "Left Ctrl" code
 {
   KeyModifierDown("ctrl");
 }
 
-trigger "shift control key" "right ctrl" as "shift control key" "left ctrl"
+trigger "shift control key" "Right Ctrl" as "shift control key" "Left Ctrl"
 
-trigger "shift key up" "left ctrl" code
+trigger "shift key up" "Left Ctrl" code
 {
   KeyModifierUp("ctrl");
 }
 
-trigger "shift key up" "right ctrl" as "shift key up" "left ctrl"
+trigger "shift key up" "Right Ctrl" as "shift key up" "Left Ctrl"
 
-trigger "alt key" "left alt" code
+trigger "alt key" "Left Alt" code
 {
   KeyModifierDown("alt");  
 }
 
-trigger "key up" "left alt" code
+trigger "key up" "Left Alt" code
 {
   KeyModifierUp("alt");  
 }
 
-trigger "shift alt key" "left shift" code
+trigger "shift alt key" "Left Shift" code
 {
   KeyModifierDown("shift");  
 }
 
-trigger "shift alt key" "right shift" as "shift alt key" "left shift"
+trigger "shift alt key" "Right Shift" as "shift alt key" "Left Shift"
 
-trigger "alt key up" "left shift" code
+trigger "alt key up" "Left Shift" code
 {
   KeyModifierUp("shift");  
 }
 
-trigger "alt key up" "right shift" as "alt key up" "left shift"
+trigger "alt key up" "Right Shift" as "alt key up" "Left Shift"
 
-trigger "shift key up" "left alt" code
+trigger "shift key up" "Left Alt" code
 {
   KeyModifierUp("alt");
 }
 
-trigger "shift alt key" "left alt" code
+trigger "shift alt key" "Left Alt" code
 {
   KeyModifierDown("alt");  
 }
 
-trigger "control alt key" "left alt" code
+trigger "control alt key" "Left Alt" code
 {
   KeyModifierDown("alt");  
 }
 
-trigger "control alt key" "left ctrl" code
+trigger "control alt key" "Left Ctrl" code
 {
   KeyModifierDown("ctrl");
 }
 
-trigger "control alt key" "right ctrl" as "control alt key" "left ctrl"
+trigger "control alt key" "Right Ctrl" as "control alt key" "Left Ctrl"
 
-trigger "control key up" "left alt" code
+trigger "control key up" "Left Alt" code
 {
   KeyModifierUp("alt"); 
 }
 
-trigger "alt key up" "left ctrl" code
+trigger "alt key up" "Left Ctrl" code
 {
   KeyModifierUp("ctrl");
 }
 
-trigger "alt key up" "right ctrl" as "alt key up" "left ctrl"
+trigger "alt key up" "Right Ctrl" as "alt key up" "Left Ctrl"
 
 # NOTE: Triples not yet implemented.
 
