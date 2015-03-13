@@ -489,8 +489,10 @@ int gccg_main(int argc,const char** argv)
 
 	Localization::ReadDictionary(CCG_DATADIR"/lib/dictionary.client");
 		
+#if 0
 	if(argc < 2)
 	    usage();
+#endif
 
 	int arg=1;
 
@@ -581,11 +583,12 @@ int gccg_main(int argc,const char** argv)
 	security.AllowOpenDir(CCG_DATADIR"/scripts/global");
 	
 	// Load game description and create save dir.
-	if(arg < argc)
+	//if(arg < argc)
+	if(1)
 	{			
 	    opt=CCG_DATADIR;
-	    opt+="/xml/";
-	    opt+=argv[arg];
+	    opt+="/xml/metw.xml";
+	    //opt+=argv[arg];
 	    cout << Localization::Message("Loading game description %s",Localization::File(opt)) << endl;
 	    Database::game.ReadFile(opt);
 
