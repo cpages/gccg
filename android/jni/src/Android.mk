@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_CPP_FEATURES += exceptions
 
-LOCAL_CFLAGS += -DPACKAGE=\"GCCG\" -DSYSTEM=\"droid\" -DCCG_DATADIR=\".\" -DCCG_SAVEDIR=\"./save\"
+LOCAL_CFLAGS += -DPACKAGE=\"GCCG\" -DSYSTEM=\"droid\" -DCCG_DATADIR=\"/sdcard/metwlite\" -DCCG_SAVEDIR=\"/sdcard/metwlite/save\"
 
 LOCAL_MODULE := main
 
