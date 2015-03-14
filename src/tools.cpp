@@ -29,7 +29,20 @@
 #include "error.h"
 #include "carddata.h"
 
+#ifdef __ANDROID__
+#include <android/log.h>
+#endif
+
 using namespace std;
+
+void log(const std::string& s)
+{
+#ifdef __ANDROID__
+    __android_log_print(ANDROID_LOG_INFO, "gccg", "%s", s.c_str());
+#else
+    cout << s << endl;
+#endif
+}
 
 string readline(istream& I)
 {

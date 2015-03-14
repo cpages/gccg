@@ -28,6 +28,8 @@ using namespace std;
 #ifndef _TOOLS_H
 #define _TOOLS_H
 
+void log(const std::string& s);
+
 /// Read one line from the stream.
 string readline(std::istream& I);
 /// Convert an integer to string.

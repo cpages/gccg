@@ -52,13 +52,13 @@ namespace Evaluator
 
     void Security::AllowReadFile(const string& pattern)
     {
-        cout << Localization::Message("Security manager: allow read file: %s",pattern) << endl;
+        //cout << Localization::Message("Security manager: allow read file: %s",pattern) << endl;
         if(find(file_read.begin(),file_read.end(),pattern)==file_read.end())
             file_read.push_back(pattern);
     }
     void Security::AllowWriteFile(const string& pattern)
     {
-        cout << Localization::Message("Security manager: allow write file: %s",pattern) << endl;
+        //cout << Localization::Message("Security manager: allow write file: %s",pattern) << endl;
         if(find(file_write.begin(),file_write.end(),pattern)==file_write.end())
             file_write.push_back(pattern);
     }
@@ -69,25 +69,25 @@ namespace Evaluator
     }
     void Security::AllowOpenDir(const string& pattern)
     {
-        cout << Localization::Message("Security manager: allow open dir: %s",pattern) << endl;
+        //cout << Localization::Message("Security manager: allow open dir: %s",pattern) << endl;
         if(find(open_dir.begin(),open_dir.end(),pattern)==open_dir.end())
             open_dir.push_back(pattern);
     }
     void Security::AllowExecute(const string& pattern)
     {
-        cout << Localization::Message("Security manager: allow execute: %s",pattern) << endl;
+        //cout << Localization::Message("Security manager: allow execute: %s",pattern) << endl;
         if(find(execute.begin(),execute.end(),pattern)==execute.end())
             execute.push_back(pattern);
     }
     void Security::AllowConnect(const string& pattern,int port)
     {
-        cout << Localization::Message("Security manager: allow connect: %s",pattern+"/"+ToString(port)) << endl;
+        //cout << Localization::Message("Security manager: allow connect: %s",pattern+"/"+ToString(port)) << endl;
         if(find(net_connect.begin(),net_connect.end(),pair<string,int>(pattern,port))==net_connect.end())
             net_connect.push_back(pair<string,int>(pattern,port));
     }
     void Security::AllowCreateSocket(int port)
     {
-        cout << Localization::Message("Security manager: allow create socket: %s",ToString(port)) << endl;
+        //cout << Localization::Message("Security manager: allow create socket: %s",ToString(port)) << endl;
         if(find(create_socket.begin(),create_socket.end(),port)==create_socket.end())
             create_socket.push_back(port);
     }

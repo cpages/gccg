@@ -33,6 +33,7 @@
 # include <dirent.h>
 #endif
 #include <algorithm>
+#include <sstream>
 #include <stdlib.h>
 #include "game.h"
 #include "error.h"
@@ -118,9 +119,9 @@ void Table::Main(const string& server,int port,string username)
     }
 
     // Call initialization triggers.
-    cout << Localization::Message("Calling %s","\"init\" \"client\"") << endl;
+    log(Localization::Message("Calling %s","\"init\" \"client\""));
     TryTrigger("init","client",ret);
-    cout << Localization::Message("Calling %s","\"init\" \"game\"") << endl;
+    log(Localization::Message("Calling %s","\"init\" \"game\""));
     TryTrigger("init","game",ret);
 
     // Main loop.
@@ -447,12 +448,13 @@ void Table::Main(const string& server,int port,string username)
     {
     }
 
-    cout << Localization::Message("Calling %s","\"exit\" \"\"") << endl;
+    log(Localization::Message("Calling %s","\"exit\" \"\""));
     TryTrigger("exit","",ret);
 }
 
 void usage()
 {
+#ifndef __ANDROID__
     cout << "usage: ccg_client [<options>...] <game.xml>" << endl;
     cout << " options: --debug" << endl;
     cout << "          --full-debug" << endl;
@@ -467,6 +469,7 @@ void usage()
     cout << "          --server <server name>" << endl;
     cout << "          --port <port number>" << endl;
     cout << "          --user <user name>" << endl;
+#endif
 
     exit(0);
 }
@@ -497,8 +500,10 @@ int gccg_main(int argc,const char** argv)
 #endif
 #endif
 
-        cout << PACKAGE << " v" << VERSION << " Generic CCG Client (" << SYSTEM << ")" << endl;
-        cout << "(c) 2001-2009 Tommi Ronkainen" << endl;
+        ostringstream oss;
+        oss << PACKAGE << " v" << VERSION << " Generic CCG Client (" << SYSTEM << ")" << endl;
+        log(oss.str());
+        log("(c) 2001-2009 Tommi Ronkainen");
 
         Localization::ReadDictionary(CCG_DATADIR"/lib/dictionary.client");
 
@@ -566,7 +571,7 @@ int gccg_main(int argc,const char** argv)
             {
                 lang=argv[++arg];
                 Localization::SetLanguage(lang);
-                cout << Localization::Message("Selecting language: %s",Localization::LanguageName(lang)) << endl;
+                log(Localization::Message("Selecting language: %s",Localization::LanguageName(lang)));
             }
             else if(opt=="--nosounds")
                 nosounds=true;
@@ -599,7 +604,7 @@ int gccg_main(int argc,const char** argv)
             opt=CCG_DATADIR;
             opt+="/xml/";
             opt+=argv[arg];
-            cout << Localization::Message("Loading game description %s",Localization::File(opt)) << endl;
+            log(Localization::Message("Loading game description %s",Localization::File(opt)));
             Database::game.ReadFile(opt);
 
             // Read extended copy if found.
@@ -610,7 +615,7 @@ int gccg_main(int argc,const char** argv)
             opt+=argv[arg];
             if(FileExist(opt))
             {
-                cout << Localization::Message("Loading game description %s",Localization::File(opt)) << endl;
+                log(Localization::Message("Loading game description %s",Localization::File(opt)));
                 Database::game.ReadFile(opt);
             }
 
@@ -625,7 +630,7 @@ int gccg_main(int argc,const char** argv)
 
             if(!opendir(f.c_str()))
             {
-                cout << Localization::Message("Creating %s",f) << endl;
+                log(Localization::Message("Creating %s",f));
 #ifdef WIN32
                 _mkdir(f.c_str());
 #else
@@ -637,7 +642,7 @@ int gccg_main(int argc,const char** argv)
             f+=Database::game.Gamedir();
             if(!opendir(f.c_str()))
             {
-                cout << Localization::Message("Creating %s",f) << endl;
+                log(Localization::Message("Creating %s",f));
 #ifdef WIN32
                 _mkdir(f.c_str());
 #else
@@ -651,7 +656,7 @@ int gccg_main(int argc,const char** argv)
             f2+="/export";
             if(!opendir(f.c_str()))
             {
-                cout << Localization::Message("Creating %s",f) << endl;
+                log(Localization::Message("Creating %s",f));
 #ifdef WIN32
                 _mkdir(f.c_str());
 #else
@@ -660,7 +665,7 @@ int gccg_main(int argc,const char** argv)
             }
             if(!opendir(f2.c_str()))
             {
-                cout << Localization::Message("Creating %s",f2) << endl;
+                log(Localization::Message("Creating %s",f2));
 #ifdef WIN32
                 _mkdir(f2.c_str());
 #else
@@ -715,10 +720,10 @@ int gccg_main(int argc,const char** argv)
             }
             if(!FileExist(opt))
             {
-                cout << Localization::Message("Cannot load %s (maybe need to download extra repository).",Localization::File(opt)) << endl;
+                log(Localization::Message("Cannot load %s (maybe need to download extra repository).",Localization::File(opt)));
                 continue;
             }
-            cout << Localization::Message("Loading %s",Localization::File(opt)) << endl;
+            log(Localization::Message("Loading %s",Localization::File(opt)));
             Database::cards.AddCards(opt);
             if(Evaluator::quitsignal)
                 throw Error::Quit(1);
@@ -727,12 +732,16 @@ int gccg_main(int argc,const char** argv)
         CCG::Table C(CCG_DATADIR"/scripts/client.triggers",full,debug,fulldebug,nographics,scrw,scrh);
         C.Main(server,port,username);
     }
-    catch(Error::General e)
+    catch(const Error::General &e)
     {
+#ifdef __ANDROID__
+        __android_log_print(ANDROID_LOG_ERROR, "gccg", "%s", e.Message().c_str());
+#else
         cout << endl << flush;
         cerr << e.Message() << endl;
 #ifdef WIN32
         win32_display_error("Error",e.Message().c_str());
+#endif
 #endif
     }
     catch(exception& e)
