@@ -42,6 +42,14 @@
 #endif
 #include "tools.h"
 
+#ifdef __ANDROID__
+#include <android/log.h>
+namespace
+{
+    const char *fakeargv[] = {"ccg_client", "metw.xml"};
+}
+#endif
+
 using namespace CCG;
 using namespace Database;
 using namespace Evaluator;
@@ -474,6 +482,11 @@ int gccg_main(int argc,const char** argv)
     int scrw=DEFAULT_DESIGN_WIDTH,scrh=DEFAULT_DESIGN_HEIGHT;
     string lang="en";
 
+#ifdef __ANDROID__
+    argc = 2;
+    argv = fakeargv;
+#endif
+
     try
     {
         Evaluator::InitializeLibnet();
@@ -489,10 +502,8 @@ int gccg_main(int argc,const char** argv)
 
         Localization::ReadDictionary(CCG_DATADIR"/lib/dictionary.client");
 
-#if 0
         if(argc < 2)
             usage();
-#endif
 
         int arg=1;
 
@@ -569,26 +580,25 @@ int gccg_main(int argc,const char** argv)
                 opt=argv[arg];
         }
 
-        // security.Disable();
-        security.AllowReadFile(CCG_DATADIR"/decks/*");
-        security.AllowReadFile(CCG_DATADIR"/graphics/*");
+        security.Disable();
+        //security.AllowReadFile(CCG_DATADIR"/decks/*");
+        //security.AllowReadFile(CCG_DATADIR"/graphics/*");
 
-        security.AllowReadFile(CCG_DATADIR"/sounds/*");
-        security.AllowExecute(CCG_DATADIR"/scripts/*");
-        security.AllowReadFile(CCG_DATADIR"/scripts/*");
-        security.AllowReadFile(getenv("HOME")+string("/.gccg/*"));
-        security.AllowExecute(getenv("HOME")+string("/.gccg/init*"));
-        security.AllowWriteFile("./vardump");
-        security.AllowOpenDir(CCG_DATADIR"/scripts");
-        security.AllowOpenDir(CCG_DATADIR"/scripts/global");
+        //security.AllowReadFile(CCG_DATADIR"/sounds/*");
+        //security.AllowExecute(CCG_DATADIR"/scripts/*");
+        //security.AllowReadFile(CCG_DATADIR"/scripts/*");
+        //security.AllowReadFile(getenv("HOME")+string("/.gccg/*"));
+        //security.AllowExecute(getenv("HOME")+string("/.gccg/init*"));
+        //security.AllowWriteFile("./vardump");
+        //security.AllowOpenDir(CCG_DATADIR"/scripts");
+        //security.AllowOpenDir(CCG_DATADIR"/scripts/global");
 
         // Load game description and create save dir.
-        //if(arg < argc)
-        if(1)
+        if(arg < argc)
         {
             opt=CCG_DATADIR;
-            opt+="/xml/metw.xml";
-            //opt+=argv[arg];
+            opt+="/xml/";
+            opt+=argv[arg];
             cout << Localization::Message("Loading game description %s",Localization::File(opt)) << endl;
             Database::game.ReadFile(opt);
 
@@ -671,18 +681,18 @@ int gccg_main(int argc,const char** argv)
 
         // Set security
 
-        security.AllowReadFile(CCG_DATADIR"/../"+ToLower(Database::game.Gamedir())+"/graphics/"+Database::game.Gamedir()+"/*");
-        security.AllowReadFile(CCG_DATADIR"/../"+ToLower(Database::game.Gamedir())+"/graphics/*");
+        //security.AllowReadFile(CCG_DATADIR"/../"+ToLower(Database::game.Gamedir())+"/graphics/"+Database::game.Gamedir()+"/*");
+        //security.AllowReadFile(CCG_DATADIR"/../"+ToLower(Database::game.Gamedir())+"/graphics/*");
 
-        security.AllowOpenDir(CCG_DATADIR"/scripts/"+Database::game.Gamedir());
-        security.AllowOpenDir(CCG_DATADIR"/decks/"+Database::game.Gamedir());
-        security.AllowOpenDir(CCG_DATADIR"/decks/"+Database::game.Gamedir()+"/*");
-        security.AllowOpenDir(getenv("HOME")+string("/.gccg/")+Database::game.Gamedir()+"/import");
-        security.AllowOpenDir(getenv("HOME")+string("/.gccg/")+Database::game.Gamedir()+"/import/*");
-        security.AllowOpenDir(getenv("HOME")+string("/.gccg/")+Database::game.Gamedir()+"/export");
-        security.AllowOpenDir(getenv("HOME")+string("/.gccg/")+Database::game.Gamedir()+"/export/*");
-        security.AllowWriteFile(getenv("HOME")+string("/.gccg/")+Database::game.Gamedir()+"/*");
-        security.AllowConnect("*",ANY_PORT);
+        //security.AllowOpenDir(CCG_DATADIR"/scripts/"+Database::game.Gamedir());
+        //security.AllowOpenDir(CCG_DATADIR"/decks/"+Database::game.Gamedir());
+        //security.AllowOpenDir(CCG_DATADIR"/decks/"+Database::game.Gamedir()+"/*");
+        //security.AllowOpenDir(getenv("HOME")+string("/.gccg/")+Database::game.Gamedir()+"/import");
+        //security.AllowOpenDir(getenv("HOME")+string("/.gccg/")+Database::game.Gamedir()+"/import/*");
+        //security.AllowOpenDir(getenv("HOME")+string("/.gccg/")+Database::game.Gamedir()+"/export");
+        //security.AllowOpenDir(getenv("HOME")+string("/.gccg/")+Database::game.Gamedir()+"/export/*");
+        //security.AllowWriteFile(getenv("HOME")+string("/.gccg/")+Database::game.Gamedir()+"/*");
+        //security.AllowConnect("*",ANY_PORT);
 
         // Load card sets.
 
