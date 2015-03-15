@@ -45,6 +45,7 @@
 
 #ifdef __ANDROID__
 #include <android/log.h>
+#include <SDL_system.h> //for storage paths
 namespace
 {
     const char *fakeargv[] = {"ccg_client", "metw.xml"};
@@ -625,7 +626,12 @@ int gccg_main(int argc,const char** argv)
             if(FileExist(df))
                 Localization::ReadDictionary(df);
 
-            string f2,f=getenv("HOME");
+            string f2;
+#ifdef __ANDROID__
+            string f=string(SDL_AndroidGetInternalStoragePath());
+#else
+            string f=getenv("HOME");
+#endif
             f+="/.gccg";
 
             if(!opendir(f.c_str()))
