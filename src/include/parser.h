@@ -52,8 +52,12 @@
 
 #ifdef USE_SQUIRREL
 #include <squirrel.h>
-
 #endif
+
+#ifdef __ANDROID__
+#include <SDL_system.h> //for storage paths
+#endif
+
 using namespace std;
 
 /// Generic expression evaluator.
@@ -1701,7 +1705,11 @@ namespace Evaluator
 
 		if(execdir == "" || !FileExist(file)) {
 
+#ifdef __ANDROID__
+            file=string(SDL_AndroidGetInternalStoragePath());
+#else
 		    file=getenv("HOME");
+#endif
 		    file+="/.gccg/";
 		    file+=arg.String();
 		}
@@ -2116,7 +2124,11 @@ namespace Evaluator
 
 	    variable["VERSION"]=VERSION;
 	    variable["SYSTEM"]=SYSTEM;
+#ifdef __ANDROID__
+        variable["HOME"]=string(SDL_AndroidGetInternalStoragePath());
+#else
 	    variable["HOME"]=getenv("HOME");
+#endif
 	    variable["SAVEDIR"]=CCG_SAVEDIR;
 	    variable["DATADIR"]=CCG_DATADIR;
 	}

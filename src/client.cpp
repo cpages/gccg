@@ -73,7 +73,11 @@ void Table::Main(const string& server,int port,string username)
     if(username != "")
         parser.SetVariable("username",username);
     else
+#ifdef __ANDROID__
+        parser.SetVariable("username",string("droid"));
+#else
         parser.SetVariable("username",string(getenv("USER")));
+#endif
 
     if(server != "")
         parser.SetVariable("server.name",server);
