@@ -275,7 +275,13 @@ static unsigned char fix_SDL_Keypad(SDLKey key)
 Driver::Driver(int screenwidth,int screenheight,bool _fullscreen,int physwidth,int physheight)
 {
     nographics=false;
-    fullscreen=_fullscreen;
+    //force fullscreen for android, to handle scaling properly
+    fullscreen=
+#ifdef __ANDROID__
+        true;
+#else
+        _fullscreen;
+#endif
 
     scrw=screenwidth;
     scrh=screenheight;
