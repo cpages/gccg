@@ -31,6 +31,10 @@
 #include "carddata.h"
 #include "parser_functions.h"
 
+#ifdef __ANDROID__
+#include <SDL_system.h> //for storage paths
+#endif
+
 using namespace Database;
 
 namespace Evaluator
@@ -380,14 +384,22 @@ namespace Evaluator
 	    find_decks(file,ret);
 
 	    // Check users own import deck files.
+#ifdef __ANDROID__
+        file=string(SDL_AndroidGetInternalStoragePath());
+#else
 	    file=getenv("HOME");
+#endif
 	    file+="/.gccg/";
 	    file+=Database::game.Gamedir();
 	    file+="/import/";
 	    find_decks(file,ret);
 
 	    // Check users own export deck files.
+#ifdef __ANDROID__
+        file=string(SDL_AndroidGetInternalStoragePath());
+#else
 	    file=getenv("HOME");
+#endif
 	    file+="/.gccg/";
 	    file+=Database::game.Gamedir();
 	    file+="/export/";
