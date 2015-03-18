@@ -23,6 +23,10 @@
 #include "parser.h"
 #include "carddata.h"
 
+#ifdef __ANDROID__
+#include <SDL_keyboard.h> //for virt. keyboard
+#endif
+
 using namespace Evaluator;
 using namespace Database;
 using namespace CCG;
@@ -3514,6 +3518,22 @@ Data Table::InputSplit(const Data& args)
     return ret;
 }
 
+Data Table::start_text_input(const Data& args)
+{
+#ifdef __ANDROID__
+    SDL_StartTextInput();
+#endif
+    return Null;
+}
+
+Data Table::stop_text_input(const Data& args)
+{
+#ifdef __ANDROID__
+    SDL_StopTextInput();
+#endif
+    return Null;
+}
+
 void Table::InitializeLibrary()
 {
     parser.SetFunction("add_marker",&Table::add_marker);
@@ -3632,6 +3652,8 @@ void Table::InitializeLibrary()
     parser.SetFunction("play_sound",&Table::play_sound);
     parser.SetFunction("card_sound",&Table::card_sound);
     parser.SetFunction("get_command",&Table::get_command);
+    parser.SetFunction("start_text_input",&Table::start_text_input);
+    parser.SetFunction("stop_text_input",&Table::stop_text_input);
 
     parser.SetFunction("InputSplit",&Table::InputSplit);
 }

@@ -5754,6 +5754,11 @@ def InputKeyEnd
   }
 }
 
+def MouseLeftClickInput
+{
+  start_text_input();
+}
+
 #
 # KEYBOARD ACTIONS
 # ================
@@ -6017,6 +6022,7 @@ def PriceDelta
 def KeyReturn
 {
   DelCursor();
+  stop_text_input();
   if((mode=="chat" || mode=="watch") && (isreal(input) || input=="") && card.number && count(object.number,books))
     HandlePriceInput();
   else
@@ -11651,7 +11657,7 @@ def InitializePanelSystem
     ("msgbox","input","input.box",0,0,screen.width,h(16),
       INCOLOR,BRCOLOR,BGCOLOR,
       0,12,0,1,
-      ("highlight","ontop=Z_MBOX"),
+      ("highlight","clickable","ontop=Z_MBOX"),
       1),
   );
   panel_structure{"products"}=(

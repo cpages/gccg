@@ -1062,6 +1062,8 @@ namespace CCG
 	Evaluator::Data load_sound(const Evaluator::Data&);
 	Evaluator::Data play_sound(const Evaluator::Data&);
 	Evaluator::Data card_sound(const Evaluator::Data&);
+	Evaluator::Data start_text_input(const Evaluator::Data&);
+	Evaluator::Data stop_text_input(const Evaluator::Data&);
 
 	//  Faster implementations of some script language functions
 	//  --------------------------------------------------------
