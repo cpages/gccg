@@ -27,6 +27,10 @@
 #include "error.h"
 #include "tools.h"
 
+#ifdef __ANDROID__
+#include <SDL_version.h>
+#endif
+
 #define SHADING_ALPHA_LEVEL 120
 
 using namespace CCG;
