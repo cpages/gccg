@@ -33,7 +33,6 @@
 # include <dirent.h>
 #endif
 #include <algorithm>
-#include <sstream>
 #include <stdlib.h>
 #include "game.h"
 #include "error.h"
@@ -44,8 +43,8 @@
 #include "tools.h"
 
 #ifdef __ANDROID__
-#include <android/log.h>
 #include <SDL_system.h> //for storage paths
+
 namespace
 {
     const char *fakeargv[] = {"ccg_client", "metw.xml"};
@@ -124,9 +123,9 @@ void Table::Main(const string& server,int port,string username)
     }
 
     // Call initialization triggers.
-    log(Localization::Message("Calling %s","\"init\" \"client\""));
+    logi << Localization::Message("Calling %s","\"init\" \"client\"") << endl;
     TryTrigger("init","client",ret);
-    log(Localization::Message("Calling %s","\"init\" \"game\""));
+    logi << Localization::Message("Calling %s","\"init\" \"game\"") << endl;
     TryTrigger("init","game",ret);
 
     // Main loop.
@@ -453,28 +452,26 @@ void Table::Main(const string& server,int port,string username)
     {
     }
 
-    log(Localization::Message("Calling %s","\"exit\" \"\""));
+    logi << Localization::Message("Calling %s","\"exit\" \"\"") << endl;
     TryTrigger("exit","",ret);
 }
 
 void usage()
 {
-#ifndef __ANDROID__
-    cout << "usage: ccg_client [<options>...] <game.xml>" << endl;
-    cout << " options: --debug" << endl;
-    cout << "          --full-debug" << endl;
-    cout << "          --lang-debug" << endl;
-    cout << "          --full" << endl;
-    cout << "          --design <width>x<height> (default: " << DEFAULT_DESIGN_WIDTH << "x" << DEFAULT_DESIGN_HEIGHT << ")" << endl;
-    cout << "          --geometry <width>x<height>" << endl;
-    cout << "          --nographics" << endl;
-    cout << "          --nosounds" << endl;
-    cout << "          --cache" << endl;
-    cout << "          --windows-fonts" << endl;
-    cout << "          --server <server name>" << endl;
-    cout << "          --port <port number>" << endl;
-    cout << "          --user <user name>" << endl;
-#endif
+    logi << "usage: ccg_client [<options>...] <game.xml>" << endl;
+    logi << " options: --debug" << endl;
+    logi << "          --full-debug" << endl;
+    logi << "          --lang-debug" << endl;
+    logi << "          --full" << endl;
+    logi << "          --design <width>x<height> (default: " << DEFAULT_DESIGN_WIDTH << "x" << DEFAULT_DESIGN_HEIGHT << ")" << endl;
+    logi << "          --geometry <width>x<height>" << endl;
+    logi << "          --nographics" << endl;
+    logi << "          --nosounds" << endl;
+    logi << "          --cache" << endl;
+    logi << "          --windows-fonts" << endl;
+    logi << "          --server <server name>" << endl;
+    logi << "          --port <port number>" << endl;
+    logi << "          --user <user name>" << endl;
 
     exit(0);
 }
@@ -505,10 +502,8 @@ int gccg_main(int argc,const char** argv)
 #endif
 #endif
 
-        ostringstream oss;
-        oss << PACKAGE << " v" << VERSION << " Generic CCG Client (" << SYSTEM << ")" << endl;
-        log(oss.str());
-        log("(c) 2001-2009 Tommi Ronkainen");
+        logi << PACKAGE << " v" << VERSION << " Generic CCG Client (" << SYSTEM << ")" << endl;
+        logi << "(c) 2001-2009 Tommi Ronkainen" << endl;
 
         Localization::ReadDictionary(CCG_DATADIR"/lib/dictionary.client");
 
@@ -534,7 +529,7 @@ int gccg_main(int argc,const char** argv)
                 scrh=atoi(s);
                 if(scrw==0 || scrh==0)
                 {
-                    cerr << "ccg_client: invalid design" << endl;
+                    loge << "ccg_client: invalid design" << endl;
                     return 1;
                 }
                 // also override default geometry
@@ -550,7 +545,7 @@ int gccg_main(int argc,const char** argv)
                 scrh=atoi(s);
                 if(scrw==0 || scrh==0)
                 {
-                    cerr << "ccg_client: invalid geometry" << endl;
+                    loge << "ccg_client: invalid geometry" << endl;
                     return 1;
                 }
             }
@@ -576,13 +571,14 @@ int gccg_main(int argc,const char** argv)
             {
                 lang=argv[++arg];
                 Localization::SetLanguage(lang);
-                log(Localization::Message("Selecting language: %s",Localization::LanguageName(lang)));
+                logi << Localization::Message("Selecting language: %s",
+                        Localization::LanguageName(lang)) << endl;
             }
             else if(opt=="--nosounds")
                 nosounds=true;
             else
             {
-                cerr << "ccg_client: invalid options "+opt << endl;
+                loge << "ccg_client: invalid options "+opt << endl;
                 return 1;
             }
             arg++;
@@ -609,7 +605,8 @@ int gccg_main(int argc,const char** argv)
             opt=CCG_DATADIR;
             opt+="/xml/";
             opt+=argv[arg];
-            log(Localization::Message("Loading game description %s",Localization::File(opt)));
+            logi << Localization::Message("Loading game description %s",
+                    Localization::File(opt)) << endl;
             Database::game.ReadFile(opt);
 
             // Read extended copy if found.
@@ -620,7 +617,8 @@ int gccg_main(int argc,const char** argv)
             opt+=argv[arg];
             if(FileExist(opt))
             {
-                log(Localization::Message("Loading game description %s",Localization::File(opt)));
+                logi << Localization::Message("Loading game description %s",
+                        Localization::File(opt)) << endl;
                 Database::game.ReadFile(opt);
             }
 
@@ -640,7 +638,7 @@ int gccg_main(int argc,const char** argv)
 
             if(!opendir(f.c_str()))
             {
-                log(Localization::Message("Creating %s",f));
+                logi << Localization::Message("Creating %s",f) << endl;
 #ifdef WIN32
                 _mkdir(f.c_str());
 #else
@@ -652,7 +650,7 @@ int gccg_main(int argc,const char** argv)
             f+=Database::game.Gamedir();
             if(!opendir(f.c_str()))
             {
-                log(Localization::Message("Creating %s",f));
+                logi << Localization::Message("Creating %s",f) << endl;
 #ifdef WIN32
                 _mkdir(f.c_str());
 #else
@@ -666,7 +664,7 @@ int gccg_main(int argc,const char** argv)
             f2+="/export";
             if(!opendir(f.c_str()))
             {
-                log(Localization::Message("Creating %s",f));
+                logi << Localization::Message("Creating %s",f) << endl;
 #ifdef WIN32
                 _mkdir(f.c_str());
 #else
@@ -675,7 +673,7 @@ int gccg_main(int argc,const char** argv)
             }
             if(!opendir(f2.c_str()))
             {
-                log(Localization::Message("Creating %s",f2));
+                logi << Localization::Message("Creating %s",f2) << endl;
 #ifdef WIN32
                 _mkdir(f2.c_str());
 #else
@@ -730,10 +728,11 @@ int gccg_main(int argc,const char** argv)
             }
             if(!FileExist(opt))
             {
-                log(Localization::Message("Cannot load %s (maybe need to download extra repository).",Localization::File(opt)));
+                logi << Localization::Message("Cannot load %s (maybe need to download extra repository).",
+                        Localization::File(opt)) << endl;
                 continue;
             }
-            log(Localization::Message("Loading %s",Localization::File(opt)));
+            logi << Localization::Message("Loading %s",Localization::File(opt)) << endl;
             Database::cards.AddCards(opt);
             if(Evaluator::quitsignal)
                 throw Error::Quit(1);
@@ -744,19 +743,15 @@ int gccg_main(int argc,const char** argv)
     }
     catch(const Error::General &e)
     {
-#ifdef __ANDROID__
-        __android_log_print(ANDROID_LOG_ERROR, "gccg", "%s", e.Message().c_str());
-#else
-        cout << endl << flush;
-        cerr << e.Message() << endl;
+        logi << endl << flush;
+        loge << e.Message() << endl;
 #ifdef WIN32
         win32_display_error("Error",e.Message().c_str());
-#endif
 #endif
     }
     catch(exception& e)
     {
-        cerr << "Unhandled exception: " << e.what() << endl;
+        loge << "Unhandled exception: " << e.what() << endl;
 #ifdef WIN32
         win32_display_error("Unhandled exception",e.what());
 #endif

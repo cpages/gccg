@@ -20,15 +20,58 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
 #include <ctype.h>
 #include <stdlib.h>
+
+#ifdef __ANDROID__
+#include <android/log.h>
+#endif
 
 using namespace std;
 
 #ifndef _TOOLS_H
 #define _TOOLS_H
 
-void log(const std::string& s);
+class Logger
+{
+    public:
+        enum Type
+        {
+            Info,
+            Error
+        };
+
+        Logger(Type t):
+            _type(t)
+        { }
+
+        ~Logger()
+        {
+#ifdef __ANDROID__
+            const int prio =
+                _type == Info ? ANDROID_LOG_INFO : ANDROID_LOG_ERROR;
+            __android_log_print(prio, "gccg", "%s", oss.str().c_str());
+#else
+            if (_type == Info)
+                cout << oss.str();
+            else
+                cerr << oss.str();
+#endif
+        }
+
+        std::ostringstream& get()
+        {
+            return oss;
+        }
+
+    private:
+        Type _type;
+        ostringstream oss;
+};
+
+#define logi Logger(Logger::Info).get()
+#define loge Logger(Logger::Error).get()
 
 /// Read one line from the stream.
 string readline(std::istream& I);
