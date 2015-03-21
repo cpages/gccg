@@ -630,7 +630,7 @@ int gccg_main(int argc,const char** argv)
 
             string f2;
 #ifdef __ANDROID__
-            string f=string(SDL_AndroidGetInternalStoragePath());
+            string f=string(SDL_AndroidGetExternalStoragePath());
 #else
             string f=getenv("HOME");
 #endif

@@ -385,7 +385,7 @@ namespace Evaluator
 
 	    // Check users own import deck files.
 #ifdef __ANDROID__
-        file=string(SDL_AndroidGetInternalStoragePath());
+        file=string(SDL_AndroidGetExternalStoragePath());
 #else
 	    file=getenv("HOME");
 #endif
@@ -396,7 +396,7 @@ namespace Evaluator
 
 	    // Check users own export deck files.
 #ifdef __ANDROID__
-        file=string(SDL_AndroidGetInternalStoragePath());
+        file=string(SDL_AndroidGetExternalStoragePath());
 #else
 	    file=getenv("HOME");
 #endif

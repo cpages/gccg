@@ -1706,7 +1706,7 @@ namespace Evaluator
 		if(execdir == "" || !FileExist(file)) {
 
 #ifdef __ANDROID__
-            file=string(SDL_AndroidGetInternalStoragePath());
+            file=string(SDL_AndroidGetExternalStoragePath());
 #else
 		    file=getenv("HOME");
 #endif
@@ -2125,7 +2125,7 @@ namespace Evaluator
 	    variable["VERSION"]=VERSION;
 	    variable["SYSTEM"]=SYSTEM;
 #ifdef __ANDROID__
-        variable["HOME"]=string(SDL_AndroidGetInternalStoragePath());
+        variable["HOME"]=string(SDL_AndroidGetExternalStoragePath());
 #else
 	    variable["HOME"]=getenv("HOME");
 #endif
