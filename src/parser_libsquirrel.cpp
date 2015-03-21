@@ -63,7 +63,7 @@ namespace Evaluator
         bool squirrel_started = false;
         
         // Print function, can't handle more than 1024 characters.
-        // This does properly use the cout stream however.
+        // This does properly use the logi stream however.
         static void gccg_sq_print_func(HSQUIRRELVM sq, const SQChar *format, ...)
         {
             char str[1024];
@@ -71,7 +71,7 @@ namespace Evaluator
             va_start(ap, format);
             vsnprintf(str, 1024, format, ap);
             va_end(ap);
-            cout << str << endl;
+            logi << str << endl;
         }
 
         static void gccg_sq_compiler_error_handler(
@@ -99,7 +99,7 @@ namespace Evaluator
             sq_getstring(sq, 2, &str);
             sq_pop(sq, 2); // Remove stringified object
 
-            cout << "Error in Squirrel function: " << str << endl << endl;
+            logi << "Error in Squirrel function: " << str << endl << endl;
             
             sqstd_printcallstack(sq);
 

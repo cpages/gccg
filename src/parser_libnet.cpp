@@ -82,12 +82,12 @@ namespace Evaluator
 		// Ignore SIG PIPE.
 		static void IgnoreSignal(int s)
 		{
-			cerr << "Warning: SIG PIPE received" << endl;
+			loge << "Warning: SIG PIPE received" << endl;
 		}
 
 		void QuitSignal(int s)
 		{
-			cout << "Warning: Signal " << s << " received." << endl;
+			logi << "Warning: Signal " << s << " received." << endl;
 			Evaluator::quitsignal=true;
 		}
 		
@@ -106,7 +106,7 @@ namespace Evaluator
 			socket=client.sock;
 			SDL_UnlockMutex(client.lock);
 
-//			cout << "Thread " << number << ": started" << endl;
+//			logi << "Thread " << number << ": started" << endl;
 
 			while(1)
 			{
@@ -120,7 +120,7 @@ namespace Evaluator
 
 				if(writestr != "")
 				{
-//					cout << "Thread " << number << ": send " << writestr << endl;
+//					logi << "Thread " << number << ": send " << writestr << endl;
 					SDL_LockMutex(client.lock);
 					client.writing=true;
 					SDL_UnlockMutex(client.lock);
@@ -150,7 +150,7 @@ namespace Evaluator
 				}				
 			}
 
-//			cout << "Thread " << number << ": finished" << endl;
+//			logi << "Thread " << number << ": finished" << endl;
 			
 			return 0;
 		}
@@ -418,7 +418,7 @@ namespace Evaluator
 							"Writer thread",&people[which]);
 					if(people[which].writer_thread==NULL)
 					{
-						cout << "ERROR: Cannot create thread" << endl;
+						logi << "ERROR: Cannot create thread" << endl;
 						SDLNet_TCP_Close(people[which].sock);
 						people[which].sock = NULL;
 					}
@@ -499,7 +499,7 @@ namespace Evaluator
 					SDLNet_TCP_DelSocket(socketset, people[con].sock);
 					people[con].writer_eof=true;
 					if(SDL_SemPost(people[con].wait)!=0)
-						cerr << "ERROR: SemPost failed" << endl;
+						loge << "ERROR: SemPost failed" << endl;
 					SDL_UnlockMutex(people[con].lock);
 				}
 			}
@@ -638,7 +638,7 @@ namespace Evaluator
 			{
 				people[client].write_buffer+=data+"\n";
 				if(SDL_SemPost(people[client].wait)!=0)
-					cerr << "ERROR: SemPost failed" << endl;
+					loge << "ERROR: SemPost failed" << endl;
 			}
 			SDL_UnlockMutex(people[client].lock);
 						
@@ -707,7 +707,7 @@ namespace Evaluator
 				{
 					people[i].write_buffer+=data+"\n";
 					if(SDL_SemPost(people[i].wait)!=0)
-						cerr << "ERROR: SemPost failed" << endl;
+						loge << "ERROR: SemPost failed" << endl;
 				}
 				SDL_UnlockMutex(people[i].lock);
 			}
@@ -731,7 +731,7 @@ namespace Evaluator
 					SDL_LockMutex(people[i].lock);
 					people[i].writer_eof=true;
 					if(SDL_SemPost(people[i].wait)!=0)
-						cerr << "ERROR: SemPost failed" << endl;
+						loge << "ERROR: SemPost failed" << endl;
 					SDL_UnlockMutex(people[i].lock);
 					SDL_WaitThread(people[i].writer_thread,&status);
 				}
@@ -740,12 +740,12 @@ namespace Evaluator
 			for(size_t i=0; i<connections.size(); i++)
 			{
 				SDLNet_TCP_Close(connections[i]);
-//				cout << "SDLNet_TCP_Close(connections[" << i << "])" << endl;
+//				logi << "SDLNet_TCP_Close(connections[" << i << "])" << endl;
 			}
 			if ( servsock != NULL )
 			{
 				SDLNet_TCP_Close(servsock);
-//				cout << "SDLNet_TCP_Close(servsock)" << endl;
+//				logi << "SDLNet_TCP_Close(servsock)" << endl;
 				servsock = NULL;
 			}
 			if ( client_socketset != NULL )

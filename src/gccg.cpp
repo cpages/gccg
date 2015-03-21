@@ -51,7 +51,7 @@ private:
         public:
             Evaluator::Data call(Evaluator::Data& arg)
             {
-                cout << "Can't call GCCG script from Squirrel in the parser tester." << endl;
+                logi << "Can't call GCCG script from Squirrel in the parser tester." << endl;
                 abort();
             }
     };
@@ -85,22 +85,22 @@ void Shell::main(Parser<Shell>& P)
 			if(Evaluator::quitsignal)
 				return;
 			
-			cout << ">";
+			logi << ">";
 			line=readline(cin);
 
 			try
 			{
-				cout << tostr(P(line+";")) << endl;
+				logi << tostr(P(line+";")) << endl;
 			}
 			catch(Evaluator::LangErr e)
 			{
-				cerr << e.Message() << endl;
+				loge << e.Message() << endl;
 			}
 		}
 	}
 	catch(Error::General e)
 	{
-		cerr << e.Message() << endl;
+		loge << e.Message() << endl;
 	}
 }
 
@@ -108,8 +108,8 @@ int main(int argc,char** argv)
 {
 	string lang="en";
 	
-	cout << PACKAGE << "-Script shell v" << VERSION << endl;
-	cout << "(c) 2001,2002,2003,2004,2005 Tommi Ronkainen" << endl;
+	logi << PACKAGE << "-Script shell v" << VERSION << endl;
+	logi << "(c) 2001,2002,2003,2004,2005 Tommi Ronkainen" << endl;
 	
 	Evaluator::savedir=CCG_SAVEDIR;
 	Evaluator::InitializeLibnet();
@@ -125,7 +125,7 @@ int main(int argc,char** argv)
 		{
 			if(string("--help")==argv[arg] || string("-h")==argv[arg] || string("-?")==argv[arg])
 			{
-				cout << "usage: gccg [--security] [--lang <code>] [--debug] [--load <game.xml>] [<script file>...]" << endl;
+				logi << "usage: gccg [--security] [--lang <code>] [--debug] [--load <game.xml>] [<script file>...]" << endl;
 				return 0;
 			}
 			else if(string("--debug")==argv[arg])
@@ -155,7 +155,7 @@ int main(int argc,char** argv)
 				string file=CCG_DATADIR;
 				file+="/xml/";
 				file+=argv[++arg];
-				cout << "Loading " << file << endl;
+				logi << "Loading " << file << endl;
 				Database::game.ReadFile(file);
 				if(lang!="en")
 				{
@@ -170,12 +170,12 @@ int main(int argc,char** argv)
 					file+=Database::game.Gamedir();
 					file+="/";
 					file+=Database::game.CardSet(i);
-					cout << "Loading " << file << endl;
+					logi << "Loading " << file << endl;
 					Database::cards.AddCards(file);
 				}
 				Evaluator::savedir+="/";
 				Evaluator::savedir+=Database::game.Gamedir();
-				cout << "Using save dir " << Evaluator::savedir << endl;
+				logi << "Using save dir " << Evaluator::savedir << endl;
 
 				security.AllowOpenDir(CCG_DATADIR"/decks/"+Database::game.Gamedir());
 				security.AllowOpenDir(CCG_DATADIR"/scripts/"+Database::game.Gamedir());
@@ -184,15 +184,15 @@ int main(int argc,char** argv)
 				Evaluator::execdir=CCG_DATADIR;
 				Evaluator::execdir+="/scripts/";
 				Evaluator::execdir+=Database::game.Gamedir();
-				cout << "Using exec dir " << Evaluator::execdir << endl;
+				logi << "Using exec dir " << Evaluator::execdir << endl;
 			}
 			else
 			{
 				ifstream f(argv[arg]);
-				cout << "Running " << argv[arg] << endl;
+				logi << "Running " << argv[arg] << endl;
 				if(!f)
 				{
-					cerr << "cannot open "+string(argv[arg]) << endl;
+					loge << "cannot open "+string(argv[arg]) << endl;
 					return 2;
 				}
 				
@@ -217,7 +217,7 @@ int main(int argc,char** argv)
 				}
 				catch(Error::General e)
 				{
-					cerr << e.Message() << endl;
+					loge << e.Message() << endl;
 					return 1;
 				}
 			}
@@ -229,11 +229,11 @@ int main(int argc,char** argv)
 	}
 	catch(Error::General e)
 	{
-		cerr << e.Message() << endl;
+		loge << e.Message() << endl;
 		return 1;
 	}
         catch(exception& e)
         {
-            cerr << "Unhandled exception: " << e.what() << endl;
+            loge << "Unhandled exception: " << e.what() << endl;
         }
 }

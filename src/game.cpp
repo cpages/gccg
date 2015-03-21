@@ -78,53 +78,53 @@ void Object::DetachAll()
 
 void Object::Dump() const
 {
-    cout << endl << "  #" << number << "  '" << Name() << "' ";
+    logi << endl << "  #" << number << "  '" << Name() << "' ";
     if(parent)
-	cout << " LNK #" << parent->number;
+	logi << " LNK #" << parent->number;
 
     list<Object*>::const_iterator i;
     for(i=attachments.begin(); i!=attachments.end(); i++)
-	cout << " ATC #" << (*i)->Number();
+	logi << " ATC #" << (*i)->Number();
 
     for(size_t i=0; i<marker_image.size(); i++)
 	if(markers[i])
-	    cout << " MRK" << i << " x " << markers[i] << " ";
+	    logi << " MRK" << i << " x " << markers[i] << " ";
 
     for(vector<string>::const_iterator i=texts.begin(); i!=texts.end(); i++)
-	cout << " TXT '" << *i << "' ";
+	logi << " TXT '" << *i << "' ";
 
-    cout << endl << "  ";
+    logi << endl << "  ";
 
     if(grp.visible)
-	cout << "visible ";
+	logi << "visible ";
     if(grp.draggable)
-	cout << "draggable ";
+	logi << "draggable ";
     if(grp.sticky)
-	cout << "sticky ";
+	logi << "sticky ";
     if(grp.ontop)
-	cout << "ontop ";
+	logi << "ontop ";
     if(grp.clickable)
-	cout << "clickable ";
+	logi << "clickable ";
     if(grp.highlight)
-	cout << "highlight ";
+	logi << "highlight ";
     if(grp.compact)
-	cout << "compact ";
+	logi << "compact ";
     if(grp.tiny)
-	cout << "tiny ";
+	logi << "tiny ";
     if(grp.fit)
-	cout << "fit ";
+	logi << "fit ";
 	
-    cout << endl << "  ";
+    logi << endl << "  ";
 
-    cout << "color " << grp.text.color.r << "," << grp.text.color.g << "," << grp.text.color.b << " ";
-    cout << "font " << grp.text.font << " ";
-    cout << "pointsize " << grp.text.pointsize << " ";
-    cout << "align " << grp.text.align << " ";
-    cout << "valign " << grp.text.valign << " ";
-    cout << "margin " << grp.text.margin << " ";
-    cout << "shadow " << grp.text.shadow << " ";
+    logi << "color " << grp.text.color.r << "," << grp.text.color.g << "," << grp.text.color.b << " ";
+    logi << "font " << grp.text.font << " ";
+    logi << "pointsize " << grp.text.pointsize << " ";
+    logi << "align " << grp.text.align << " ";
+    logi << "valign " << grp.text.valign << " ";
+    logi << "margin " << grp.text.margin << " ";
+    logi << "shadow " << grp.text.shadow << " ";
 
-    cout << endl << "  ";
+    logi << endl << "  ";
 }
 
 bool Object::ClickableAt(int x,int y) const
@@ -272,10 +272,10 @@ void Image::RecalculateSize()
 
 void CardInPlay::Dump() const
 {
-    cout << "CardInPlay ";
+    logi << "CardInPlay ";
     Object::Dump();
-    cout << " angle: " << angle;
-    cout << " " << Database::cards.Name(card);
+    logi << " angle: " << angle;
+    logi << " " << Database::cards.Name(card);
 }
 
 void CardInPlay::Tap()
@@ -324,16 +324,16 @@ void CardInPlay::RecalculateSize()
 
 void Hand::Dump() const
 {
-    cout << "Hand ";
+    logi << "Hand ";
     Object::Dump();
-    cout << " (";
+    logi << " (";
     for(size_t i=0; i<cards.size(); i++)
     {
 	if(i)
-	    cout << " ";
-	cout << cards[i];
+	    logi << " ";
+	logi << cards[i];
     }
-    cout << ")";
+    logi << ")";
 }
 
 void Hand::Add(int card)
@@ -431,16 +431,16 @@ void Hand::RecalculateSize()
 
 void CardBox::Dump() const
 {
-    cout << "CardBox ";
+    logi << "CardBox ";
     Object::Dump();
-    cout << " (";
+    logi << " (";
     for(size_t i=0; i<cards.size(); i++)
     {
 	if(i)
-	    cout << " ";
-	cout << cards[i];
+	    logi << " ";
+	logi << cards[i];
     }
-    cout << ")";
+    logi << ")";
 }
 
 void CardBox::Del(int index)
@@ -551,8 +551,8 @@ void CardBox::RecalculateSize()
 
 void Deck::Dump() const
 {
-    cout << "Deck ";
-    cout << Size() << " cards ";
+    logi << "Deck ";
+    logi << Size() << " cards ";
     Object::Dump();
 }
 
@@ -749,8 +749,8 @@ int CardBook::SetSlot(int card)
 
 void CardBook::Dump() const
 {
-    cout << "Book ";
-    cout << "pg." << page << " (max. " << LastPage() << ")";
+    logi << "Book ";
+    logi << "pg." << page << " (max. " << LastPage() << ")";
 	
     Object::Dump();
 }
@@ -1138,8 +1138,8 @@ int CardBook::CurrentSection() const
 
 void Menu::Dump() const
 {
-    cout << "Menu ";
-    cout << entries.size() << " entries ";
+    logi << "Menu ";
+    logi << entries.size() << " entries ";
     Object::Dump();
 }
 
@@ -1364,8 +1364,8 @@ void ListBox::Clear()
 
 void ListBox::Dump() const
 {
-    cout << "Listbox ";
-    cout << Columns() << " columns " << Rows() << " rows ";
+    logi << "Listbox ";
+    logi << Columns() << " columns " << Rows() << " rows ";
     Object::Dump();
 }
 
@@ -1445,7 +1445,7 @@ Table::Table(const string& triggerfile1,bool fullscreen,bool debug,bool fulldebu
 	
     refresh=true;
 	
-    cout << Localization::Message("Loading %s",triggerfile1) << endl;
+    logi << Localization::Message("Loading %s",triggerfile1) << endl;
     event_triggers.ReadFile(triggerfile1);
 
     if(debug)
@@ -1453,10 +1453,10 @@ Table::Table(const string& triggerfile1,bool fullscreen,bool debug,bool fulldebu
     if(fulldebug)
 	Evaluator::debug=true;
 	
-    cout << Localization::Message("Calling %s","\"init\" \"\"") << endl;
+    logi << Localization::Message("Calling %s","\"init\" \"\"") << endl;
     parser(event_triggers("init",""));
 	
-    cout << Localization::Message("Initializing graphics driver: resolution %s",ToString(design_width)+"x"+ToString(design_height)) << endl;
+    logi << Localization::Message("Initializing graphics driver: resolution %s",ToString(design_width)+"x"+ToString(design_height)) << endl;
 
 
     Driver::driver=new Driver::Driver(design_width,design_height,fullscreen,scrw,scrh);
@@ -1523,7 +1523,7 @@ Table::~Table()
 
 void Table::Warning(const string& message)
 {
-    cerr << "WARNING: " << message << endl;
+    loge << "WARNING: " << message << endl;
 }
 
 Evaluator::Data Table::Execute(const string& code)
@@ -1536,18 +1536,18 @@ Evaluator::Data Table::Execute(const string& code)
     {
 	static int errornumber=1;
 	parser.vardump(Null);
-	cerr << endl << flush;
-	cerr << "=================================================================" << endl;
-	cerr << "ERROR #" << errornumber << endl << endl;
-	cerr << endl << "Code caused exception:" << endl;
+	loge << endl << flush;
+	loge << "=================================================================" << endl;
+	loge << "ERROR #" << errornumber << endl << endl;
+	loge << endl << "Code caused exception:" << endl;
 	if(code.length() > 500)
-	    cerr << code.substr(0,500) << "...." << endl;
+	    loge << code.substr(0,500) << "...." << endl;
 	else
-	    cerr << code << endl;
+	    loge << code << endl;
 			
-	cerr << endl << e.Message() << endl;
+	loge << endl << e.Message() << endl;
 
-	cerr << endl << "Stacktrace:" << endl;
+	loge << endl << "Stacktrace:" << endl;
 	parser.stacktrace(Null);
 		
 	errornumber++;
@@ -1560,13 +1560,13 @@ Evaluator::Data Table::Execute(const string& code)
 
 void Table::Dump() const
 {
-    cout << "TABLE:" << endl;
+    logi << "TABLE:" << endl;
     list<Object*>::const_iterator i;
     for(i=table.begin(); i!=table.end(); i++)
     {
-	cout << (*i)->grp.x << ',' << (*i)->grp.y << ' ' << (*i)->grp.w << 'x' << (*i)->grp.h << ": ";
+	logi << (*i)->grp.x << ',' << (*i)->grp.y << ' ' << (*i)->grp.w << 'x' << (*i)->grp.h << ": ";
 	(*i)->Dump();
-	cout << endl;
+	logi << endl;
     }
 }
 
@@ -1873,13 +1873,13 @@ bool Table::TryTrigger(const string& key1,const string& key2,Data& value)
     if(code=="")
     {
 	if(debugmode > 0 && key1!="timer" && key1!="move")
-	    cout << "Trigger: \"" << key1 << "\" \"" << key2 << "\" not defined" << endl;
+	    logi << "Trigger: \"" << key1 << "\" \"" << key2 << "\" not defined" << endl;
 	return 0;
     }
 
     value=Execute(code);
     if(debugmode > 0 && key1!="timer" && key1!="move")
-	cout << "Trigger: \"" << key1 << "\" \"" << key2 << "\" returns: " << tostr(value) << endl;
+	logi << "Trigger: \"" << key1 << "\" \"" << key2 << "\" returns: " << tostr(value) << endl;
 		
     return 1;
 }

@@ -363,7 +363,7 @@ namespace Localization
 		if(default_language==current_language)
 		{
 			if(debug)
-				cerr << "en: " << message << endl;
+				loge << "en: " << message << endl;
 			return true;
 		}
 
@@ -377,7 +377,7 @@ namespace Localization
 			if(split)
 				splitted=TrySplitting(message);
 			if(debug && split)
-				cerr << "en: " << message << endl;
+				loge << "en: " << message << endl;
 			
  			return splitted;
 		}

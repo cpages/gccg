@@ -750,8 +750,11 @@ void Document::ReadFile(const string& filename)
 
 void Document::WriteElement(ostream& O,size_t tab,Element* e)
 {
+#if 0
+    //TODO: remove this, I guess
     if(tab==2)
 	cout << endl;
+#endif
 
     for(size_t i=0; i<tab; i++)
 	O << ' ';

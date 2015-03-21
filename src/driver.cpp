@@ -278,9 +278,9 @@ namespace Driver
 		w=0;h=0;
 		while(text != "")
 		{
-// 			cout << "text=[" << text << "] -> [";
+// 			logi << "text=[" << text << "] -> [";
 			word=GetNextTextElement(text,style,w0,h0,maxwidth);
-// 			cout << word << "] " << w0 << "x" << h0 << " (maxw " << maxwidth << ")" << endl;
+// 			logi << word << "] " << w0 << "x" << h0 << " (maxw " << maxwidth << ")" << endl;
 			if(w+w0 <= maxwidth || ret=="")
 			{
 				if(word.length() && word[word.length()-1]=='\n')
@@ -340,7 +340,7 @@ namespace Driver
             string f=FindFile(filename,"graphics");
             if(f=="")
             {
-                cerr << "Warning: Image missing: "+filename << endl;
+                loge << "Warning: Image missing: "+filename << endl;
                 f=FindFile("q.png","graphics");
             }
 		inlineimage[tag]=LoadImage(f,Color(0,0,0));

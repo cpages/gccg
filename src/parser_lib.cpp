@@ -78,14 +78,14 @@ namespace Evaluator
 	///   output. List members are separeated by spaces.
 	Data print(const Data& arg)
 	{
-		cout << arg << flush;
+		logi << arg << flush;
 		return Data();
 	}
 
 	/// println(e) - Same as {\tt print}, but a new line is appended.
 	Data println(const Data& arg)
 	{
-		cout << arg << endl << flush;
+		logi << arg << endl << flush;
 		return Data();
 	}
 

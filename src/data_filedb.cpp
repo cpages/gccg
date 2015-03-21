@@ -56,13 +56,13 @@ namespace Evaluator
 	
 	inline void DataFileDB::Dump(const string& function,const string& description,const Data& data) const
 	{
-		cout << DbName(this) << " " << TypeToString(dbtype) << " [" << dir << "] " << function << endl;
-//		cout << "   value now: " << tostr(*this).String().substr(0,80) << endl;
-		cout << "   " << description;
+		logi << DbName(this) << " " << TypeToString(dbtype) << " [" << dir << "] " << function << endl;
+//		logi << "   value now: " << tostr(*this).String().substr(0,80) << endl;
+		logi << "   " << description;
 		if(data!=Null)
-			cout << " "<< tostr(data).String().substr(0,80) << endl;
+			logi << " "<< tostr(data).String().substr(0,80) << endl;
 		else
-			cout << endl;
+			logi << endl;
 	}
 #else
 	inline void DataFileDB::Dump(const string& function,const string& description,const Data& data) const
@@ -545,7 +545,7 @@ namespace Evaluator
 			// Debug:
 #ifdef FILEDB_DEBUG
 // 			for(size_t i=0; i<status.size(); i++)
-// 				cout << "   => Age of " << vec[i][0] << " (" << i << "): " << (now - status[i].access) << "s " << (status[i].ondisk ? "disk" : "memory") << endl;
+// 				logi << "   => Age of " << vec[i][0] << " (" << i << "): " << (now - status[i].access) << "s " << (status[i].ondisk ? "disk" : "memory") << endl;
 #endif
 			int save_count=0;
 			int oldest_index;

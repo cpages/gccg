@@ -82,9 +82,9 @@ template<class T> class cow_data
 #if COW_DEBUG
 		countmalloc--;
 		if(countmalloc==0)
-			std::cout << "cow_vector debug: all allocated memory blocks released!!!! good :)" << endl;
+			std::logi << "cow_vector debug: all allocated memory blocks released!!!! good :)" << endl;
 		if(countmalloc < 0)
-			std::cout << "COW_VECTOR DEBUG: DOUBLE FREE BUG!" << endl;
+			std::logi << "COW_VECTOR DEBUG: DOUBLE FREE BUG!" << endl;
 #endif
 		delete data;
 	}
@@ -110,7 +110,7 @@ template<class T> class cow_vector
 		{
 			p=new cow_data<T>();
 #ifdef COW_DUMP_MALLOCS
-			cout << "ITEM " << this << ": " << "Create " << p << " (" << p->refcount << ")" << endl;
+			logi << "ITEM " << this << ": " << "Create " << p << " (" << p->refcount << ")" << endl;
 #endif
 		}
 	}
@@ -122,13 +122,13 @@ template<class T> class cow_vector
 			return;
 		
 #ifdef COW_DUMP_MALLOCS
-		cout << "ITEM " << this << ": " << "Release " << p << " (" << p->refcount << ")" << endl;
+		logi << "ITEM " << this << ": " << "Release " << p << " (" << p->refcount << ")" << endl;
 #endif
 		p->refcount--;
 		if(p->refcount==0)
 		{
 #ifdef COW_DUMP_MALLOCS
-			cout << "ITEM " << this << ": " << "Free " << p << endl;
+			logi << "ITEM " << this << ": " << "Free " << p << endl;
 #endif
 			delete p;
 		}
@@ -141,7 +141,7 @@ template<class T> class cow_vector
 		{
 			cow_data<T>* newp=new cow_data<T>(p->data);
 #ifdef COW_DUMP_MALLOCS
-			cout << "ITEM " << this << ": " << "Clone " << p << " -> " << newp << endl;
+			logi << "ITEM " << this << ": " << "Clone " << p << " -> " << newp << endl;
 #endif
 			free();
 			p=newp;
@@ -159,7 +159,7 @@ public:
 	{
 		p=new cow_data<T>(sz);
 #ifdef COW_DUMP_MALLOCS
-		cout << "ITEM " << this << ": " << "Create " << p << " (" << p->refcount << ")" << endl;
+		logi << "ITEM " << this << ": " << "Create " << p << " (" << p->refcount << ")" << endl;
 #endif
 	}
 
@@ -167,7 +167,7 @@ public:
 	{
 		p=new cow_data<T>(sz,value);
 #ifdef COW_DUMP_MALLOCS
-		cout << "ITEM " << this << ": " << "Create " << p << " (" << p->refcount << ")" << endl;
+		logi << "ITEM " << this << ": " << "Create " << p << " (" << p->refcount << ")" << endl;
 #endif
 	}
 	
@@ -184,7 +184,7 @@ public:
 		{
 			p->refcount++;
 #ifdef COW_DUMP_MALLOCS
-			cout << "ITEM " << this << ": " << "Copy " << p << " (" << p->refcount << ")" << endl;
+			logi << "ITEM " << this << ": " << "Copy " << p << " (" << p->refcount << ")" << endl;
 #endif
 		}
 		
@@ -214,13 +214,13 @@ public:
 
 	inline const T& operator[](int i) const
 	{
-	  //	  cout << "CONST [" << i << "]" << endl;
+	  //	  logi << "CONST [" << i << "]" << endl;
 		return (*p->data)[i];
 	}
 	
 	inline T& operator[](int i)
 	{
-	  //	  cout << "REF [" << i << "]" << endl;
+	  //	  logi << "REF [" << i << "]" << endl;
 		check();
 		get_write_access();
 		return (*p->data)[i];

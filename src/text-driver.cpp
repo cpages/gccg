@@ -97,7 +97,7 @@ namespace Driver
     void Driver::Beep()
     {
 	string beep_buffer="\007";
-	cout << beep_buffer << flush;
+	logi << beep_buffer << flush;
     }
 
 	void Driver::Blink(int enabled)
@@ -181,10 +181,10 @@ namespace Driver
 
 	while(1)
 	{
-	    if(!cin || !cout || quit_signal_flag)
+	    if(!cin || !logi || quit_signal_flag)
 		return(NULL);
 			
-	    cout << ">" << flush;
+	    logi << ">" << flush;
 	    s=readline(cin) + "\n";
 	    pthread_mutex_lock(&input_buffer_lock);
 	    input_buffer.push_back(s);
@@ -271,9 +271,9 @@ namespace Driver
 	{
 	    evalmode=!evalmode;
 	    if(evalmode)
-		cout << "Eval mode ON" << endl;
+		logi << "Eval mode ON" << endl;
 	    else
-		cout << "Eval mode OFF" << endl;
+		logi << "Eval mode OFF" << endl;
 	    buffer="";
 	    return ret;
 	}

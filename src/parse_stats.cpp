@@ -21,17 +21,17 @@ int main(int argc,char** argv)
 	    if(stats[3][0][Data("realname")].IsString())
 		realname=stats[3][0][Data("realname")].String();
 
-	    cout << "Realname: " << realname << endl;
+	    logi << "Realname: " << realname << endl;
 	    
 	    // Find the keys of the match result dictionary.
 	    Data matches=stats[3][3].Keys();
-	    cout << "Game type keys: " << tostr(matches) << endl;
+	    logi << "Game type keys: " << tostr(matches) << endl;
 
 	    // Loop over all game formats.
  	    for(size_t j=0; j<matches.Size(); j++)
 	    {
 		Data players=matches[j];
-		cout << "For " << players << " players: " << tostr(stats[3][3][players]) << endl;
+		logi << "For " << players << " players: " << tostr(stats[3][3][players]) << endl;
 		
 		// Loop over result types.
 		Data results=stats[3][3][players].Keys();
@@ -42,14 +42,14 @@ int main(int argc,char** argv)
 		    int count=stats[3][3][players][results[k]].Integer();
 		    int num_players=players.Integer();
 
-		    cout << "  Result found: " << result_type << " " << count << " times with " << num_players << " player(s)" << endl;
+		    logi << "  Result found: " << result_type << " " << count << " times with " << num_players << " player(s)" << endl;
 		}
 	    }
 	}
     }
     catch(Error::General e)
     {
-	cerr << e.Message() << endl;
+	loge << e.Message() << endl;
 	return 1;
     }
 }

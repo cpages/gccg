@@ -141,7 +141,7 @@ namespace Driver
 	void Driver::Beep()
 	{
 		static char* beep_buffer="\007";
-		cout << beep_buffer << flush;
+		logi << beep_buffer << flush;
 	}
 	
 	void Driver::DrawCardImage(int imagenumber,int x,int y,int size,int angle)

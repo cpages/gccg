@@ -194,7 +194,7 @@ namespace Evaluator
 			dump_indent+=adjust;
 				
 		    for(int i=0; i<dump_indent; i++)
-			cerr << ' ';
+			loge << ' ';
 
 		    if(adjust > 0)
 			dump_indent+=adjust;
@@ -303,9 +303,9 @@ namespace Evaluator
 #ifdef PERFORMANCE_ANALYSIS
 	    vector<string> sorted(perf_total_time.size());
 		
-	    cout << "--------------------" << endl;
-	    cout << "Performance analysis" << endl;
-	    cout << "--------------------" << endl;
+	    logi << "--------------------" << endl;
+	    logi << "Performance analysis" << endl;
+	    logi << "--------------------" << endl;
 		
 	    map<string,long>::iterator i;
 	    int j=0;
@@ -314,7 +314,7 @@ namespace Evaluator
 
 	    string tmp;
 		
-	    cout << "Total time:" << endl;
+	    logi << "Total time:" << endl;
 	    for(size_t j=0; j<sorted.size()-1; j++)
 		for(size_t k=j+1; k<sorted.size(); k++)
 		    if(perf_total_time[sorted[j]] < perf_total_time[sorted[k]])
@@ -325,9 +325,9 @@ namespace Evaluator
 		    }
 
 	    for(size_t j=0; j<sorted.size(); j++)
-		cout << " " << sorted[j] << " " << double(perf_total_time[sorted[j]])/1000.0 << "ms" << endl;
+		logi << " " << sorted[j] << " " << double(perf_total_time[sorted[j]])/1000.0 << "ms" << endl;
 
-	    cout << "Number of calls:" << endl;
+	    logi << "Number of calls:" << endl;
 	    for(size_t j=0; j<sorted.size()-1; j++)
 		for(size_t k=j+1; k<sorted.size(); k++)
 		    if(perf_calls[sorted[j]] < perf_calls[sorted[k]])
@@ -338,9 +338,9 @@ namespace Evaluator
 		    }
 
 	    for(size_t j=0; j<sorted.size(); j++)
-		cout << " " << sorted[j] << " " << perf_calls[sorted[j]] << " times" << endl;
+		logi << " " << sorted[j] << " " << perf_calls[sorted[j]] << " times" << endl;
 
-	    cout << "Average time:" << endl;
+	    logi << "Average time:" << endl;
 	    for(size_t j=0; j<sorted.size()-1; j++)
 		for(size_t k=j+1; k<sorted.size(); k++)
 		    if(perf_total_time[sorted[j]]/perf_calls[sorted[j]] < perf_total_time[sorted[k]]/perf_calls[sorted[k]])
@@ -351,13 +351,13 @@ namespace Evaluator
 		    }
 
 	    for(size_t j=0; j<sorted.size(); j++)
-		cout << " " << sorted[j] << " " << double(perf_total_time[sorted[j]])/perf_calls[sorted[j]]/1000.0 << "ms" << endl;
+		logi << " " << sorted[j] << " " << double(perf_total_time[sorted[j]])/perf_calls[sorted[j]]/1000.0 << "ms" << endl;
 
-	    cout << "Alphabetically:" << endl;
+	    logi << "Alphabetically:" << endl;
 		
 	    for(i=perf_total_time.begin(); i!=perf_total_time.end(); i++)
 	    {
-		cout << " " << (*i).first << " " << double((*i).second)/1000.0 << "ms (called " << perf_calls[(*i).first] << " times) avg:" <<  double((*i).second)/1000.0/perf_calls[(*i).first] << " ms"  << endl;
+		logi << " " << (*i).first << " " << double((*i).second)/1000.0 << "ms (called " << perf_calls[(*i).first] << " times) avg:" <<  double((*i).second)/1000.0/perf_calls[(*i).first] << " ms"  << endl;
 	    }
 
 #endif
@@ -545,7 +545,7 @@ namespace Evaluator
 			if(debug)
 			{
 			    Tab(2);
-			    cerr << "Fnc: eval(" << tostr(ret) << ")" << endl;
+			    loge << "Fnc: eval(" << tostr(ret) << ")" << endl;
 			}
 			if(ret.IsString())
 			{
@@ -576,7 +576,7 @@ namespace Evaluator
 		    if(debug)
 		    {
 			Tab(2);
-			cerr << "Fnc: " << name << "(" << tostr(ret) << ")" << endl;					
+			loge << "Fnc: " << name << "(" << tostr(ret) << ")" << endl;					
 		    }
 				
 		    // Application defined function
@@ -680,7 +680,7 @@ namespace Evaluator
 		    if(debug)
 		    {
 			Tab(-2);
-			cerr << "Out: " << tostr(ret) << endl;
+			loge << "Out: " << tostr(ret) << endl;
 		    }
 
 		    _src=src;
@@ -770,7 +770,7 @@ namespace Evaluator
 		    if(debug)
 		    {
 			Tab(0);
-			cerr << "Set: " << debugname << "=" << tostr(ret).String() << endl;
+			loge << "Set: " << debugname << "=" << tostr(ret).String() << endl;
 		    }
 				
 		    _src=src;
@@ -1544,13 +1544,13 @@ namespace Evaluator
 		a=s.top();
 		s.pop();
 			
-		cerr << "[ " << i << ". ] " << s.top() << "(" << a << ")" << endl;
+		loge << "[ " << i << ". ] " << s.top() << "(" << a << ")" << endl;
 			
 		s.pop();
 		i++;
 	    }
 #else
-	    cout << "Stacktrace ability not compiled in parser." << endl;
+	    logi << "Stacktrace ability not compiled in parser." << endl;
 #endif
 	    return Null;
 	}

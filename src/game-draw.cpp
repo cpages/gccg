@@ -308,9 +308,9 @@ void MessageBox::WriteMessage(const string& text)
 #ifdef TEXT_VERSION
     if(name != "input" && name!="chat msg")
     {
-	cout << "\e[1D";
+	logi << "\e[1D";
 	if(name != "")
-	    cout << "\e[0m\e[4m" << name << "\e[24m: ";
+	    logi << "\e[0m\e[4m" << name << "\e[24m: ";
 
 	int len=0;
 	string code,out;
@@ -382,7 +382,7 @@ void MessageBox::WriteMessage(const string& text)
 	else if(right)
 	    out=string("                                                                            ").substr(0,(76-len))+out;
 				
-	cout << out << endl << "\e[0m>" << flush;
+	logi << out << endl << "\e[0m>" << flush;
     }
 #else
 

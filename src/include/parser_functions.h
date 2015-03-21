@@ -40,7 +40,7 @@
 /// Throw an error if stack bigger than 1024 entries.
 #define CHECK_STACK_OVERFLOW if(argument_stack.size() > 1024) { \
     stacktrace(Null); \
-    cerr << "Parser<Application>::EvalAtom(string&): stack overflow" << endl; \
+    loge << "Parser<Application>::EvalAtom(string&): stack overflow" << endl; \
 	while(argument_stack.size()) \
 		argument_stack.pop(); \
 	abort(); }

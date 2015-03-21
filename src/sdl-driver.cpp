@@ -304,7 +304,7 @@ Driver::Driver(int screenwidth,int screenheight,bool _fullscreen,int physwidth,i
         if(Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,2,4096)<0)
         {
             nosounds=true;
-            cerr << "Mix_OpenAudio failed: " << SDL_GetError();
+            loge << "Mix_OpenAudio failed: " << SDL_GetError();
         }
     }
 
@@ -360,14 +360,14 @@ Driver::Driver(int screenwidth,int screenheight,bool _fullscreen,int physwidth,i
     SDL_VideoDriverName(drivername, sizeof(drivername));
     const SDL_VideoInfo* info = SDL_GetVideoInfo();
 
-    cout << Localization::Message("Graphics initialized:") << endl;
-    cout << Localization::Message("  Driver = %s", drivername) << endl;
-    cout << Localization::Message("  Fullscreen = %s", screen->flags&SDL_FULLSCREEN ? "Yes" : "No") << endl;
-    cout << Localization::Message("  Physical resolution = %s", ToString(info->current_w)+"x"+ToString(info->current_h)) << endl;
-    cout << Localization::Message("  HW Available = %s", info->hw_available ? "Yes" : "No") << endl;
-    cout << Localization::Message("  HW Video memory = %sMB", ToString(info->video_mem/1024)) << endl;
-    cout << Localization::Message("  HW Surface = %s", screen->flags&SDL_HWSURFACE ? "Yes" : "No") << endl;
-    cout << Localization::Message("  BPP = %s", ToString((int)screen->format->BitsPerPixel)) << endl;
+    logi << Localization::Message("Graphics initialized:") << endl;
+    logi << Localization::Message("  Driver = %s", drivername) << endl;
+    logi << Localization::Message("  Fullscreen = %s", screen->flags&SDL_FULLSCREEN ? "Yes" : "No") << endl;
+    logi << Localization::Message("  Physical resolution = %s", ToString(info->current_w)+"x"+ToString(info->current_h)) << endl;
+    logi << Localization::Message("  HW Available = %s", info->hw_available ? "Yes" : "No") << endl;
+    logi << Localization::Message("  HW Video memory = %sMB", ToString(info->video_mem/1024)) << endl;
+    logi << Localization::Message("  HW Surface = %s", screen->flags&SDL_HWSURFACE ? "Yes" : "No") << endl;
+    logi << Localization::Message("  BPP = %s", ToString((int)screen->format->BitsPerPixel)) << endl;
 #endif
 
 #ifdef WIN32
@@ -517,7 +517,7 @@ void Driver::Fullscreen(bool mode)
 void Driver::Beep()
 {
     string beep_buffer="\007";
-    cout << beep_buffer << flush;
+    logi << beep_buffer << flush;
 }
 
 void Driver::Blink(int enabled)
@@ -1225,7 +1225,7 @@ try_again:
 
     if(!newcard && imagenumber==0)
     {
-        cerr << "Warning: cannot load " << file << endl;
+        loge << "Warning: cannot load " << file << endl;
         file=CCG_DATADIR;
         file+="/graphics/unknown_card.png";
         newcard=IMG_Load(file.c_str());
@@ -1552,7 +1552,7 @@ void Driver::DrawTextToSurface(int fontnumber,int pointsize,int x0,int y0,const 
 
     if(!surface)
     {
-        cerr << "Warning: Unable to render '" << text << "'" << endl;
+        loge << "Warning: Unable to render '" << text << "'" << endl;
         return;
     }
 
@@ -1573,7 +1573,7 @@ void Driver::DrawTextToSurface(int fontnumber,int pointsize,int x0,int y0,const 
 
         if(!shadow)
         {
-            cerr << "Warning: Unable to render '" << text << "'" << endl;
+            loge << "Warning: Unable to render '" << text << "'" << endl;
             return;
         }
 
@@ -2246,7 +2246,7 @@ void Driver::PlaySound(int sound_number)
 
     Mix_Chunk* chunk=sound_collection[sound_number];
     if(Mix_PlayChannel(-1, chunk, 0) < 0)
-        cerr << "Unable to play sound: " << Mix_GetError() << endl;
+        loge << "Unable to play sound: " << Mix_GetError() << endl;
 }
 }
 
