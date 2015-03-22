@@ -27,7 +27,7 @@ TRACKER=http://tracker.thepiratebay.org/announce
 #
 #####################################################################
 
-DEFINES=-DPACKAGE=\"GCCG\" -DSYSTEM=\"$(SYSTEM)\" -DCCG_DATADIR=\".\" -DCCG_SAVEDIR=\"./save\" -DSTACK_TRACE
+DEFINES=-DPACKAGE=\"GCCG\" -DSYSTEM=\"$(SYSTEM)\" -DCCG_DATADIR=\"/tmp/gccg\" -DCCG_SAVEDIR=\"./save\" -DSTACK_TRACE
 
 #CFLAGS=-I./src/include -g -Wall `$(SDLCONFIG) --cflags` -O3 $(CFLAGS_SQUIRREL)
 CFLAGS=-I./src/include -g -Wall `$(SDLCONFIG) --cflags` $(CFLAGS_SQUIRREL)
