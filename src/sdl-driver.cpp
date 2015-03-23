@@ -92,12 +92,6 @@ bool nosounds=false;
 static vector<string> fontfile;
 /// Fonts.
 static vector<map<int,TTF_Font*> > font;
-/// Left mouse button down.
-static bool mouse1;
-/// Right mouse button down.
-static bool mouse2;
-/// Middle mouse button down.
-static bool mouse3;
 /// Do we have a control pressed?
 static bool control;
 /// Do we have a shift pressed?
@@ -176,64 +170,6 @@ static Uint32 GetPixel(SDL_Surface* surface,int x,int y)
     }
 
     return 0;
-}
-
-static int GetEvent(SDL_Event& event)
-{
-    if(SDL_PollEvent(&event)==0)
-        return 0;
-
-    if(event.type==SDL_KEYUP)
-    {
-        if(event.key.keysym.sym == SDLK_RCTRL || event.key.keysym.sym == SDLK_LCTRL)
-            control=false;
-        else if(event.key.keysym.sym == SDLK_RSHIFT || event.key.keysym.sym == SDLK_LSHIFT)
-            shift=false;
-        else if(event.key.keysym.sym == SDLK_RALT || event.key.keysym.sym == SDLK_LALT)
-            alt=false;
-    }
-    else if(event.type==SDL_KEYDOWN)
-    {
-        if(event.key.keysym.sym == SDLK_RCTRL || event.key.keysym.sym == SDLK_LCTRL)
-            control=true;
-        else if(event.key.keysym.sym == SDLK_RSHIFT || event.key.keysym.sym == SDLK_LSHIFT)
-            shift=true;
-        else if(event.key.keysym.sym == SDLK_RALT || event.key.keysym.sym == SDLK_LALT)
-            alt=true;
-    }
-    else if (event.type==SDL_MOUSEBUTTONDOWN)
-    {
-        if(event.button.button==SDL_BUTTON_LEFT)
-            mouse1=true;
-        else if(event.button.button==SDL_BUTTON_RIGHT)
-            mouse2=true;
-        else if(event.button.button==SDL_BUTTON_MIDDLE)
-            mouse3=true;
-    }
-    else if (event.type==SDL_MOUSEBUTTONUP)
-    {
-        if(event.button.button==SDL_BUTTON_LEFT)
-            mouse1=false;
-        else if(event.button.button==SDL_BUTTON_RIGHT)
-            mouse2=false;
-        else if(event.button.button==SDL_BUTTON_MIDDLE)
-            mouse3=false;
-    }
-    else if(event.type==SDL_MOUSEMOTION)
-    {
-        SDL_Event peep;
-        int count=0;
-        while(count < 50 && SDL_PeepEvents(&peep,1,SDL_GETEVENT,SDL_MOUSEMOTION,SDL_MOUSEMOTION)==1)
-        {
-            event.motion.x=peep.motion.x;
-            event.motion.y=peep.motion.y;
-            event.motion.xrel+=peep.motion.xrel;
-            event.motion.yrel+=peep.motion.yrel;
-            count++;
-        }
-    }
-
-    return 1;
 }
 
 static string CommandModifier()
@@ -351,9 +287,6 @@ Driver::Driver(int screenwidth,int screenheight,bool _fullscreen,int physwidth,i
     control=false;
     shift=false;
     alt=false;
-    mouse1=false;
-    mouse2=false;
-    mouse3=false;
 
 #if 0
     char drivername[128];
@@ -776,218 +709,182 @@ Command Driver::WaitCommand(int delay)
     static int state=0; // 0 - normal, 1 - dragging, 2 - mouse clicked (waiting drag or release)
     static string dragtype; // Description of the dragging mode (ctrl,left etc.).
     static int dragx,dragy; // Mouseposition when dragging begun
-    static Uint32 clicktime_l=0; // Time when mouse pressed button down.
-    static Uint32 clicktime_m=0;
-    static Uint32 clicktime_r=0;
+    static Uint32 clicktime=0; // Time when mouse pressed button down.
+    static string click_command;
 
     // Get the event if any.
     Command ret;
-    SDL_Event event;
+    ret.command="";
 
     SDL_Delay(delay);
 
-    event.type=SDL_FIRSTEVENT;
-
-    if(!GetEvent(event) && state!=2)
+    SDL_Event event;
+    if(SDL_PollEvent(&event)==0)
         return ret;
 
-    // Handle window events
-    if(event.type==SDL_WINDOWEVENT)
+    switch(event.type)
     {
-        bool handled = true;
-        switch (event.window.event)
-        {
-            case SDL_WINDOWEVENT_FOCUS_GAINED:
-                ret.command = "input_gained";
-                break;
-            case SDL_WINDOWEVENT_FOCUS_LOST:
-                ret.command = "input_lost";
-                break;
-            case SDL_WINDOWEVENT_SHOWN:
-                //fall through
-            case SDL_WINDOWEVENT_EXPOSED:
-                ret.command = "redraw";
-                break;
-            default:
-                // Do nothing for now
-                handled = false;
-                break;
-        }
-        if (handled)
+        case SDL_TEXTINPUT:
+            SDL_GetMouseState(&ret.x,&ret.y);
+            ret.command="text";
+            ret.argument=string(event.text.text);
             return ret;
-    }
-
-    // Handle quit event.
-    if(event.type==SDL_QUIT)
-    {
-        ret.command="quit";
-        return ret;
-    }
-
-    if(state==0 && event.type==SDL_TEXTINPUT)
-    {
-        SDL_GetMouseState(&ret.x,&ret.y);
-
-        ret.command="text";
-        ret.argument=string(event.text.text);
-
-        return ret;
-    }
-
-    // Handle key press
-    if(state==0 && event.type==SDL_KEYDOWN)
-    {
-        SDL_GetMouseState(&ret.x,&ret.y);
-
-        ret.command=CommandModifier()+"key";
-        ret.argument=SDL_GetKeyName(event.key.keysym.sym);
-        ret.key=char(event.key.keysym.sym & 0xff);
-        //if( ret.key == 0 ) ret.key = fix_SDL_Keypad(event.key.keysym.sym);
-
-        return ret;
-    }
-
-    // Handle key release
-    if(state==0 && event.type==SDL_KEYUP)
-    {
-        SDL_GetMouseState(&ret.x,&ret.y);
-
-        ret.command=CommandModifier()+"key up";
-        ret.argument=SDL_GetKeyName(event.key.keysym.sym);
-        ret.key=char(event.key.keysym.sym & 0xff);
-        //if( ret.key == 0 ) ret.key = fix_SDL_Keypad(event.key.keysym.sym);
-
-        return ret;
-    }
-
-    // Handle mouse wheel
-    if(event.type==SDL_MOUSEWHEEL)
-    {
-        SDL_GetMouseState(&ret.x,&ret.y);
-        if (event.wheel.y > 0)
-            ret.command="wheel up";
-        else
-            ret.command="wheel down";
-        return ret;
-    }
-
-    // Mouse state 1: dragging
-    if(state==1)
-    {
-        if(event.type==SDL_MOUSEBUTTONUP)
-        {
-            ret.x=event.button.x;
-            ret.y=event.button.y;
-            state=0;
-            ret.command=dragtype+" drag end";
-
-            return ret;
-        }
-        else if(event.type==SDL_MOUSEMOTION)
-        {
-            ret.x=event.motion.x;
-            ret.y=event.motion.y;
-            ret.command=dragtype+" drag";
-
-            return ret;
-        }
-
-        ret.command="";
-        return ret;
-    }
-
-    // Mouse state 2: button is just pressed down
-    static string click_command;
-    if(state==2)
-    {
-        bool motion = false;
-        int press_time=SDL_GetTicks();
-
-        if(clicktime_l)
-            press_time-=clicktime_l;
-        else if(clicktime_r)
-            press_time-=clicktime_r;
-        else if(clicktime_m)
-            press_time-=clicktime_m;
-
-        if(event.type==SDL_MOUSEMOTION)
-        {
-            static int radius=0;
-
-            if(radius==0)
+            break;
+        case SDL_KEYDOWN:
+            if(event.key.keysym.sym == SDLK_RCTRL || event.key.keysym.sym == SDLK_LCTRL)
+                control=true;
+            else if(event.key.keysym.sym == SDLK_RSHIFT || event.key.keysym.sym == SDLK_LSHIFT)
+                shift=true;
+            else if(event.key.keysym.sym == SDLK_RALT || event.key.keysym.sym == SDLK_LALT)
+                alt=true;
+            if(state==0)
             {
-                radius=physw/140;
-                radius*=physw/140;                            
+                SDL_GetMouseState(&ret.x,&ret.y);
+                ret.command=CommandModifier()+"key";
+                ret.argument=SDL_GetKeyName(event.key.keysym.sym);
+                ret.key=char(event.key.keysym.sym & 0xff);
+                //if( ret.key == 0 ) ret.key = fix_SDL_Keypad(event.key.keysym.sym);
+                return ret;
             }
-
-            int x,y;
-            x=event.motion.x;
-            y=event.motion.y;
-
-            motion=(x-dragx)*(x-dragx) + (y-dragy)*(y-dragy) > radius;
-        }
-
-        if(event.type==SDL_MOUSEBUTTONUP)
-        {
-            ret.x=event.button.x;
-            ret.y=event.button.y;
-            ret.command=click_command+" click";
-            state=0;
+            break;
+        case SDL_KEYUP:
+            if(event.key.keysym.sym == SDLK_RCTRL || event.key.keysym.sym == SDLK_LCTRL)
+                control=false;
+            else if(event.key.keysym.sym == SDLK_RSHIFT || event.key.keysym.sym == SDLK_LSHIFT)
+                shift=false;
+            else if(event.key.keysym.sym == SDLK_RALT || event.key.keysym.sym == SDLK_LALT)
+                alt=false;
+            if(state==0)
+            {
+                SDL_GetMouseState(&ret.x,&ret.y);
+                ret.command=CommandModifier()+"key up";
+                ret.argument=SDL_GetKeyName(event.key.keysym.sym);
+                ret.key=char(event.key.keysym.sym & 0xff);
+                //if( ret.key == 0 ) ret.key = fix_SDL_Keypad(event.key.keysym.sym);
+                return ret;
+            }
+            break;
+        case SDL_MOUSEBUTTONDOWN:
+            if(event.button.button==SDL_BUTTON_LEFT)
+                click_command=CommandModifier()+"left";
+            else if(event.button.button==SDL_BUTTON_RIGHT)
+                click_command=CommandModifier()+"right";
+            else if(event.button.button==SDL_BUTTON_MIDDLE)
+                click_command=CommandModifier()+"middle";
+            clicktime=event.button.timestamp;
+            state=2;
+            dragx=event.button.x;
+            dragy=event.button.y;
+            break;
+        case SDL_MOUSEBUTTONUP:
+            clicktime=0;
+            if(state!=0)
+            {
+                ret.x=event.button.x;
+                ret.y=event.button.y;
+                ret.command =
+                    state==1 ? dragtype+" drag end" : click_command+" click";
+                state=0;
+                return ret;
+            }
+            break;
+        case SDL_MOUSEWHEEL:
+            SDL_GetMouseState(&ret.x,&ret.y);
+            if (event.wheel.y > 0)
+                ret.command="wheel up";
+            else
+                ret.command="wheel down";
             return ret;
-        }
+            break;
+        case SDL_MOUSEMOTION:
+            {
+                SDL_Event peep;
+                int count=0;
+                while(count < 50 && SDL_PeepEvents(&peep,1,SDL_GETEVENT,SDL_MOUSEMOTION,SDL_MOUSEMOTION)==1)
+                {
+                    event.motion.x=peep.motion.x;
+                    event.motion.y=peep.motion.y;
+                    event.motion.xrel+=peep.motion.xrel;
+                    event.motion.yrel+=peep.motion.yrel;
+                    count++;
+                }
+            }
+            if(state==0)
+            {
+                ret.command=CommandModifier()+"move";
+                ret.x=event.motion.x;
+                ret.y=event.motion.y;
+                return ret;
+            }
+            else if(state==1)
+            {
+                ret.x=event.motion.x;
+                ret.y=event.motion.y;
+                ret.command=dragtype+" drag";
+                return ret;
+            }
+            else if(state==2)
+            {
+                assert (clicktime != 0);
+                int press_time=event.motion.timestamp - clicktime;
 
-        if(press_time > 400 || motion)
-        {
-            dragtype=click_command;
-            ret.x=dragx;
-            ret.y=dragy;
-            ret.command=click_command+" drag begin";
-            state=1;
+                bool motion = false;
+                static int radius=0;
+                if(radius==0)
+                {
+                    radius=physw/140;
+                    radius*=physw/140;                            
+                }
+                int x,y;
+                x=event.motion.x;
+                y=event.motion.y;
+                motion=(x-dragx)*(x-dragx) + (y-dragy)*(y-dragy) > radius;
+
+                if(press_time > 400 || motion)
+                {
+                    dragtype=click_command;
+                    ret.x=dragx;
+                    ret.y=dragy;
+                    ret.command=click_command+" drag begin";
+                    state=1;
+                    return ret;
+                }
+            }
+            break;
+        case SDL_WINDOWEVENT:
+            {
+                bool handled = true;
+                switch (event.window.event)
+                {
+                    case SDL_WINDOWEVENT_FOCUS_GAINED:
+                        ret.command = "input_gained";
+                        break;
+                    case SDL_WINDOWEVENT_FOCUS_LOST:
+                        ret.command = "input_lost";
+                        break;
+                    case SDL_WINDOWEVENT_SHOWN:
+                        //fall through
+                    case SDL_WINDOWEVENT_EXPOSED:
+                        ret.command = "redraw";
+                        break;
+                    default:
+                        // Do nothing for now
+                        handled = false;
+                        break;
+                }
+                if (handled)
+                    return ret;
+            }
+            break;
+        case SDL_QUIT:
+            ret.command="quit";
             return ret;
-        }
-
-        ret.command="";
-        return ret;
+            break;
+        default:
+            // Do nothing for now
+            break;
     }
 
-    // Mouse state 0: buttons are not down.
-    if (event.type==SDL_MOUSEBUTTONDOWN)
-    {
-        if(mouse1)
-            clicktime_l=SDL_GetTicks();
-        else
-            clicktime_l=0;
-        if(mouse2)
-            clicktime_r=SDL_GetTicks();
-        else
-            clicktime_r=0;
-        if(mouse3)
-            clicktime_m=SDL_GetTicks();
-        else
-            clicktime_m=0;
-
-        if(event.button.button==SDL_BUTTON_LEFT)
-            click_command=CommandModifier()+"left";
-        else if(event.button.button==SDL_BUTTON_RIGHT)
-            click_command=CommandModifier()+"right";
-        else if(event.button.button==SDL_BUTTON_MIDDLE)
-            click_command=CommandModifier()+"middle";
-
-        state=2;
-        dragx=event.button.x;
-        dragy=event.button.y;
-    }
-
-    // Mouse state 0: moving
-    if(state==0 && event.type==SDL_MOUSEMOTION)
-    {
-        ret.command=CommandModifier()+"move";
-        ret.x=event.motion.x;
-        ret.y=event.motion.y;
-        return ret;
-    }
-
-    ret.command="";
     return ret;
 }
 
